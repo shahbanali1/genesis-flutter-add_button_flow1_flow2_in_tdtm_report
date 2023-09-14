@@ -132,7 +132,8 @@ class _DataTableWidgetState extends State<DataTableWidget> {
           ConstrainedBox(
             constraints: const BoxConstraints(minWidth: 410),
             child: DataTable(
-              dataRowHeight: 25,
+              dataRowMinHeight: 25,
+              dataRowMaxHeight: 30,
               headingRowHeight: 30,
               columnSpacing: 10,
               dividerThickness: 0.7,

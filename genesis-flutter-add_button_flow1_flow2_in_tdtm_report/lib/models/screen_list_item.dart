@@ -49,6 +49,10 @@ const List<ScreenListItem> getListItem = <ScreenListItem>[
       routeName: Constant.tdtmRoute,
       imageIcon: AssetImage('assets/ic_tdtm.png')),
   ScreenListItem(
+      title: Strings.tdtmAdmin,
+      routeName: Constant.tdtmAdminRoute,
+      imageIcon: AssetImage('assets/ic_tdtm.png')),
+  ScreenListItem(
       title: Strings.govtLab,
       routeName: Constant.govtLabRoute,
       imageIcon: AssetImage('assets/ic_govt_lab.png')),
@@ -65,6 +69,21 @@ const List<ScreenListItem> getListItem = <ScreenListItem>[
       title: Strings.routeTracking,
       routeName: Constant.routeTracking,
       imageIcon: AssetImage('assets/ic_tracking.png')),
+
+  ScreenListItem(
+      title: Strings.teamWiseRevenue,
+      routeName: Constant.teamWiseRevenueRoute,
+      imageIcon: AssetImage('assets/ic_team_wise_revenue.png')),
+
+  ScreenListItem(
+      title: Strings.plheboAttendancePickup,
+      routeName: Constant.phleboAttendancePickupRoute,
+      imageIcon: AssetImage('assets/ic_phlebo_attendance_pickup.png')),
+
+  ScreenListItem(
+      title: Strings.plheboAttendanceReport,
+      routeName: Constant.phleboAttendanceReportRoute,
+      imageIcon: AssetImage('assets/ic_phlebo_attendance_pickup.png')),
 
   // ScreenListItem(
   //     title: Strings.logout,

@@ -48,8 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
             child: GridItemListView(),
           ),
           drawer: Drawer(
-              child: ListView(
-            children: [createHeader(), const NavigationDrawerListView()],
+              child: Expanded(
+            child: ListView(
+              children: [createHeader(), const NavigationDrawerListView()],
+            ),
           )),
         ),
       ),

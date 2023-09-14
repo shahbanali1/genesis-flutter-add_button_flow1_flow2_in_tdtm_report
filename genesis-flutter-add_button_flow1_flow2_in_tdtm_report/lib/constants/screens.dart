@@ -11,7 +11,11 @@ enum Screens {
   govtLab,
   hotspotZoneWise,
   inboundTodayStatus,
-  routeTracking
+  routeTracking,
+  tdtmAdmin,
+  teamWiseRevenue,
+  phleboAttendancePickup,
+  phleboAttendanceReport
 }
 
 class ScreenNames {
@@ -29,4 +33,8 @@ class ScreenNames {
   static const String hotspotTodayStatusReport = "Hotspot Zone Wise";
   static const String routeTrackingReport = "Route Tracking";
   static const String inboundTodayStatusReport = "Inbound Today Status";
+  static const String tdtmAdminReport = "TDTM Admin";
+  static const String teamWiseRevenue = "Team Wise Revenue";
+  static const String plheboAttendancePickupReport = "Phlebo Attendance Pickup";
+  static const String plheboAttendanceReport = "Phlebo Attendance Report";
 }

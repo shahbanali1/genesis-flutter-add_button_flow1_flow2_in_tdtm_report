@@ -357,16 +357,16 @@ class ManagementApis {
 <?xml version="1.0" encoding="utf-8"?>
 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Body>
-    <Get_HotSpot_ZoneWise_Lead_and xmlns="http://hac.centralindia.cloudapp.azure.com/Reportapp_dev/webservice.asmx">
+    <Get_HotSpot_ZoneWise_Lead_and32 xmlns="http://hac.centralindia.cloudapp.azure.com/Reportapp_dev/webservice.asmx">
       <Date>$date</Date>
       <etype>$platformType</etype>
-    </Get_HotSpot_ZoneWise_Lead_and>
+    </Get_HotSpot_ZoneWise_Lead_and32>
   </soap:Body>
 </soap:Envelope>
 ''';
 
-    return callAPI(bodyEnvelope, "Get_HotSpot_ZoneWise_Lead_andResponse",
-        "Get_HotSpot_ZoneWise_Lead_andResult");
+    return callAPI(bodyEnvelope, "Get_HotSpot_ZoneWise_Lead_and32Response",
+        "Get_HotSpot_ZoneWise_Lead_and32Result");
   }
 
   //INBOUND_TODAY_STATUS API Call
@@ -376,16 +376,77 @@ class ManagementApis {
 <?xml version="1.0" encoding="utf-8"?>
 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Body>
-    <INBOUND_TODAY_STATUS_and xmlns="http://hac.centralindia.cloudapp.azure.com/Reportapp_dev/webservice.asmx">
+    <INBOUND_TODAY_STATUS_and32 xmlns="http://hac.centralindia.cloudapp.azure.com/Reportapp_dev/webservice.asmx">
       <Today>$today</Today>
       <etype>$platformType</etype>
-    </INBOUND_TODAY_STATUS_and>
+    </INBOUND_TODAY_STATUS_and32>
   </soap:Body>
 </soap:Envelope>
 ''';
 
-    return callAPI(bodyEnvelope, "INBOUND_TODAY_STATUS_andResponse",
-        "INBOUND_TODAY_STATUS_andResult");
+    return callAPI(bodyEnvelope, "INBOUND_TODAY_STATUS_and32Response",
+        "INBOUND_TODAY_STATUS_and32Result");
+  }
+
+  //Route Tracking API Call
+  Future<List<BaseModel>> getGetRouteTrackingReport(
+      String uesrId, String platformType) async {
+    String bodyEnvelope = '''
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <get_route_tracking xmlns="http://hac.centralindia.cloudapp.azure.com/Reportapp_dev/webservice.asmx">
+      <Location>0</Location>
+      <userId>$uesrId</userId>
+      <etype>$platformType</etype>
+    </get_route_tracking>
+  </soap:Body>
+</soap:Envelope>
+''';
+
+    return callAPI(
+        bodyEnvelope, "get_route_trackingResponse", "get_route_trackingResult");
+  }
+
+  //Team Wise Revenue API Call
+  Future<List<BaseModel>> getTeamWiseRevenueReport(String fromDate,
+      String toDate, String specialPackage, String platformType) async {
+    String bodyEnvelope = '''
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <GetTeamWiseRevenue32 xmlns="http://hac.centralindia.cloudapp.azure.com/Reportapp_dev/webservice.asmx">
+      <FromDate>$fromDate</FromDate>
+      <ToDate>$toDate</ToDate>
+      <SpecialPackage>$specialPackage</SpecialPackage>
+      <etype>$platformType</etype>
+    </GetTeamWiseRevenue32>
+  </soap:Body>
+</soap:Envelope>
+''';
+
+    return callAPI(bodyEnvelope, "GetTeamWiseRevenue32Response",
+        "GetTeamWiseRevenue32Result");
+  }
+
+  //Team Wise Revenue API Call
+  Future<List<BaseModel>> getPhleboAttendancePickupReport(
+      String selectedRM, String searchDate, String platformType) async {
+    String bodyEnvelope = '''
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <GET_Phlebo_Attendance_Pickup_and32 xmlns="http://hac.centralindia.cloudapp.azure.com/Reportapp_dev/webservice.asmx">
+      <RmName>$selectedRM</RmName>
+      <SearchDate>$searchDate</SearchDate>
+      <etype>$platformType</etype>
+    </GET_Phlebo_Attendance_Pickup_and32>
+  </soap:Body>
+</soap:Envelope>
+''';
+
+    return callAPI(bodyEnvelope, "GET_Phlebo_Attendance_Pickup_and32Response",
+        "GET_Phlebo_Attendance_Pickup_and32Result");
   }
 
   Future<List<BaseModel>> callAPI(

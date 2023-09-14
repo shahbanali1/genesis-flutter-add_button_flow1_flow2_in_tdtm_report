@@ -15,6 +15,12 @@ class Constant {
   static const String hotspotZoneWise = '/hotspot_zone_wise';
   static const String inboundTodayStatus = '/inbound_today_status';
   static const String routeTracking = '/route_tracking';
+  static const String tdtmAdminRoute = '/tdtm_admin_route';
+  static const String teamWiseRevenueRoute = '/team_wise_revenue_route';
+  static const String phleboAttendancePickupRoute =
+      '/phlebo_attendance_pickup_route';
+  static const String phleboAttendanceReportRoute =
+      '/phlebo_attendance_report_route';
 
   static const String tabTotal = 'Total';
   static const String tabRetail = 'Retail';

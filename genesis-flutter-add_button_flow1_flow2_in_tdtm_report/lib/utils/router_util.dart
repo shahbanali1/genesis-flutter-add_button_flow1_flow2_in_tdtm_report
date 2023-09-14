@@ -87,6 +87,30 @@ class RouterUtil {
             builder: (_) =>
                 const ReportScreen(reportToOpen: Screens.routeTracking));
 
+      case Constant.tdtmAdminRoute:
+        return MaterialPageRoute(
+            settings: settings,
+            builder: (_) =>
+                const ReportScreen(reportToOpen: Screens.tdtmAdmin));
+
+      case Constant.teamWiseRevenueRoute:
+        return MaterialPageRoute(
+            settings: settings,
+            builder: (_) =>
+                const ReportScreen(reportToOpen: Screens.teamWiseRevenue));
+
+      case Constant.phleboAttendancePickupRoute:
+        return MaterialPageRoute(
+            settings: settings,
+            builder: (_) => const ReportScreen(
+                reportToOpen: Screens.phleboAttendancePickup));
+
+      case Constant.phleboAttendanceReportRoute:
+        return MaterialPageRoute(
+            settings: settings,
+            builder: (_) => const ReportScreen(
+                reportToOpen: Screens.phleboAttendanceReport));
+
       // case Constant.logoutRoute:
       //   return MaterialPageRoute(
       //       settings: settings,
@@ -131,6 +155,16 @@ class RouterUtil {
         return Navigator.pushNamed(context, Constant.inboundTodayStatus);
       case Constant.routeTracking:
         return Navigator.pushNamed(context, Constant.routeTracking);
+      case Constant.tdtmAdminRoute:
+        return Navigator.pushNamed(context, Constant.tdtmAdminRoute);
+      case Constant.teamWiseRevenueRoute:
+        return Navigator.pushNamed(context, Constant.teamWiseRevenueRoute);
+      case Constant.phleboAttendancePickupRoute:
+        return Navigator.pushNamed(
+            context, Constant.phleboAttendancePickupRoute);
+      case Constant.phleboAttendanceReportRoute:
+        return Navigator.pushNamed(
+            context, Constant.phleboAttendanceReportRoute);
       // case Constant.logoutRoute:
       //   Navigator.pop(context);
       //   return Navigator.popAndPushNamed(context, Constant.logoutRoute);

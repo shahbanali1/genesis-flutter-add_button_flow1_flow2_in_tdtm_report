@@ -11,8 +11,11 @@ import 'package:management_app/holders/hotspot_zone_wise_data_holder.dart';
 import 'package:management_app/holders/inbound_screen_data_holder.dart';
 import 'package:management_app/holders/lead_wise_conversion_screen_data_holder.dart';
 import 'package:management_app/holders/performance_of_the_day_data_holder.dart';
+import 'package:management_app/holders/phlebo_attendance_pickup_data_holder.dart';
 import 'package:management_app/holders/rm_collection_report_data_holder.dart';
+import 'package:management_app/holders/tdtm_admin_screen_data_holder.dart';
 import 'package:management_app/holders/tdtm_screen_data_holder.dart';
+import 'package:management_app/holders/team_wise_revenue_data_holder.dart';
 import 'package:management_app/holders/verifier_screen_data_holder.dart';
 import 'package:management_app/models/base_model.dart';
 import 'package:management_app/ui/screen_handler.dart';
@@ -100,6 +103,37 @@ class ReportState extends State<ReportScreen> {
                 .getHotspotZoneWiseReportData(value["selectedDate"]);
           } else if (type == Screens.inboundTodayStatus) {
             reportData = ScreenHandler().getInboundTodayStatusReportData();
+          } else if (type == Screens.routeTracking) {
+            reportData = ScreenHandler().getRouteTrackingReportData();
+          } else if (type == "tdtmAdminReport") {
+            Map value = map["value"];
+            reportData = ScreenHandler().getTDTMAdminReportData(
+              value["selectedFromDate"],
+              value["selectedToDate"],
+              value["fromDate2"],
+              value["toDate2"],
+              value["fromDate3"],
+              value["toDate3"],
+              value["fromDate4"],
+              value["toDate4"],
+              value["flow2"],
+            );
+          } else if (type == "teamWiseRevenue") {
+            Map value = map["value"];
+            reportData = ScreenHandler().getTeamWiseRevenueReportData(
+              value["selectedFromDate"],
+              value["selectedToDate"],
+            );
+          } else if (type == Screens.phleboAttendancePickup) {
+            Map value = map["value"];
+            reportData = ScreenHandler().getPhleboAttendancePickupReportData(
+              value["selectedRM"],
+            );
+          } else if (type == Screens.phleboAttendanceReport) {
+            Map value = map["value"];
+            reportData = ScreenHandler().getPhleboAttendancePickupReportData(
+              value["selectedRM"],
+            );
           }
         });
       }
@@ -175,6 +209,35 @@ class ReportState extends State<ReportScreen> {
       case Screens.inboundTodayStatus:
         reportData = ScreenHandler().getInboundTodayStatusReportData();
         break;
+      case Screens.routeTracking:
+        reportData = ScreenHandler().getRouteTrackingReportData();
+        break;
+      case Screens.tdtmAdmin:
+        reportData = ScreenHandler().getTDTMAdminReportData(
+          TDTMAdminScreenDataHolder().fromDate1,
+          TDTMAdminScreenDataHolder().toDate1,
+          TDTMAdminScreenDataHolder().fromDate2,
+          TDTMAdminScreenDataHolder().toDate2,
+          TDTMAdminScreenDataHolder().fromDate3,
+          TDTMAdminScreenDataHolder().toDate3,
+          TDTMAdminScreenDataHolder().fromDate4,
+          TDTMAdminScreenDataHolder().toDate4,
+          TDTMAdminScreenDataHolder().flowType,
+        );
+        break;
+      case Screens.teamWiseRevenue:
+        reportData = ScreenHandler().getTeamWiseRevenueReportData(
+            TeamWiseRevenueScreenDataHolder().fromDate,
+            TeamWiseRevenueScreenDataHolder().toDate);
+        break;
+      case Screens.phleboAttendancePickup:
+        reportData = ScreenHandler().getPhleboAttendancePickupReportData(
+            PhleboAttendancePickupScreenDataHolder().selectedRM);
+        break;
+      case Screens.phleboAttendanceReport:
+        reportData = ScreenHandler().getPhleboAttendancePickupReportData(
+            PhleboAttendancePickupScreenDataHolder().selectedRM);
+        break;
       default:
     }
   }
@@ -210,10 +273,14 @@ class ReportState extends State<ReportScreen> {
                   return TDTMDataTableWidget(
                     reportData: snapshot.data!,
                   );
+                } else if (widget.reportToOpen ==
+                    Screens.phleboAttendancePickup) {
+                  return getPhleboAttendancePickupWidget(snapshot.data!);
+                } else if (widget.reportToOpen ==
+                    Screens.phleboAttendanceReport) {
+                  return getPhleboAttendanceReportWidget(snapshot.data!);
                 } else {
-                  return DataTableWidget(
-                    reportData: snapshot.data!,
-                  );
+                  return DataTableWidget(reportData: snapshot.data!);
                 }
               } else {
                 return const Text("No Data");
@@ -221,6 +288,42 @@ class ReportState extends State<ReportScreen> {
             }),
       ],
     );
+  }
+
+  Widget getPhleboAttendancePickupWidget(List<BaseModel> reportData) {
+    return Column(
+      children: [
+        ScreenHandler().getPhleboAttendancePickupHeader(getUniqueRM(reportData),
+            PhleboAttendancePickupScreenDataHolder().selectedRM),
+        SizedBox(
+          height: 5,
+        ),
+        DataTableWidget(reportData: reportData),
+      ],
+    );
+  }
+
+  Widget getPhleboAttendanceReportWidget(List<BaseModel> reportData) {
+    return Column(
+      children: [
+        ScreenHandler().getPhleboAttendancePickupHeader(getUniqueRM(reportData),
+            PhleboAttendancePickupScreenDataHolder().selectedRM),
+        SizedBox(
+          height: 5,
+        ),
+        DataTableWidget(reportData: reportData),
+      ],
+    );
+  }
+
+  List<String> getUniqueRM(List<BaseModel> reportData) {
+    List<String> rmList = [];
+    rmList.add("All");
+    for (var d in reportData) {
+      rmList.add(d.basejson!["RmName"].toString());
+    }
+    List<String> result = rmList.toSet().toList();
+    return result;
   }
 
   Widget getHeader() {
@@ -245,6 +348,14 @@ class ReportState extends State<ReportScreen> {
         return ScreenHandler().getTDTMReportHeader();
       case Screens.govtLab:
         return ScreenHandler().getGovernmentLabHeader();
+      case Screens.hotspotZoneWise:
+        return ScreenHandler().getHotspotZoneWiseHeader();
+      case Screens.tdtmAdmin:
+        return ScreenHandler().getTDTMAdminHeader();
+      case Screens.teamWiseRevenue:
+        return ScreenHandler().getTeanWiseRevenueHeader();
+      // case Screens.phleboAttendancePickup:
+      //   return ScreenHandler().getPhleboAttendancePickupHeader();
 
       default:
         return Container();
@@ -303,6 +414,18 @@ class ReportState extends State<ReportScreen> {
         break;
       case Screens.routeTracking:
         title = ScreenNames.routeTrackingReport;
+        break;
+      case Screens.tdtmAdmin:
+        title = ScreenNames.tdtmAdminReport;
+        break;
+      case Screens.teamWiseRevenue:
+        title = ScreenNames.teamWiseRevenue;
+        break;
+      case Screens.phleboAttendancePickup:
+        title = ScreenNames.plheboAttendancePickupReport;
+        break;
+      case Screens.phleboAttendanceReport:
+        title = ScreenNames.plheboAttendanceReport;
         break;
       default:
         title = "Report";

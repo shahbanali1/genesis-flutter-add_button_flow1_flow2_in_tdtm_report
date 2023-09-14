@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:management_app/constants/app_colors.dart';
-import 'package:management_app/constants/screens.dart';
 import 'package:management_app/utils/data_streem.dart';
 
 class PerformanceOfTheDayHeader extends StatefulWidget {
@@ -13,8 +11,8 @@ class PerformanceOfTheDayHeader extends StatefulWidget {
 }
 
 class _PerformanceOfTheDayHeaderState extends State<PerformanceOfTheDayHeader> {
-  String selectedRole = 'Hotspot';
-  String selectedLocation = 'Gurgoan';
+  String selectedRole = 'All';
+  String selectedLocation = 'All';
   String selectedCount = '10';
   @override
   Widget build(BuildContext context) {
@@ -48,7 +46,7 @@ class _PerformanceOfTheDayHeaderState extends State<PerformanceOfTheDayHeader> {
                     selectedRole = newValue!;
                   });
                 },
-                items: <String>['Hotspot', 'Outbound', 'HM', 'Inbound']
+                items: <String>['All', 'Hotspot', 'Outbound', 'HM', 'Inbound']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -88,7 +86,7 @@ class _PerformanceOfTheDayHeaderState extends State<PerformanceOfTheDayHeader> {
                       selectedLocation = newValue!;
                     });
                   },
-                  items: <String>['Gurgoan', 'Preetvihar']
+                  items: <String>['All', 'Gurgoan', 'Preetvihar']
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,

@@ -93,6 +93,8 @@ flutter:
       - assets/ic_hotspot_zonewise.png
       - assets/ic_tracking.png
       - assets/ic_inbound_todaystatus.png
+      - assets/ic_team_wise_revenue.png
+      - assets/ic_phlebo_attendance_pickup.png
 
   # An image asset can refer to qone or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

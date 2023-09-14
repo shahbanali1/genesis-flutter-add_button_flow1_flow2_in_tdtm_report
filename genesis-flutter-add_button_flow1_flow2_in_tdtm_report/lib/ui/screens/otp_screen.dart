@@ -155,6 +155,10 @@ class _OtpScreenState extends State<OtpScreen> {
         if (response.runnerID!.isNotEmpty) {
           SharedPrefs sharedPrefs = SharedPrefs();
           sharedPrefs.updateUserLoggedIn();
+          sharedPrefs.setUserId(response.runnerID.toString());
+          sharedPrefs.setAppCode(response.appCode.toString());
+          sharedPrefs.setJobRole(response.jobRole.toString());
+
           Navigator.of(context).push(OtpScreen.route());
         } else {
           var snackBar =

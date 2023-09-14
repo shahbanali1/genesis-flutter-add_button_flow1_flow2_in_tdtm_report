@@ -17,6 +17,10 @@ class Strings {
   static const String hotspotZoneWise = "Hotspot Zone Wise";
   static const String inboundTodayStatus = "Inbound Today Status";
   static const String routeTracking = "Route Tracking";
+  static const String tdtmAdmin = "TDTM Admin";
+  static const String teamWiseRevenue = "Team Wise Revenue";
+  static const String plheboAttendancePickup = "Phlebo Attendance Pickup";
+  static const String plheboAttendanceReport = "Phlebo Attendance Report";
 
   //BUTTON TEXT
 
