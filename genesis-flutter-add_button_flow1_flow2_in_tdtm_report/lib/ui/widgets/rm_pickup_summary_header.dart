@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:management_app/constants/app_colors.dart';
+import 'package:management_app/constants/screens.dart';
 import 'package:management_app/utils/common_utils.dart';
 import 'package:management_app/utils/data_streem.dart';
 
-class RmCollectionHeader extends StatefulWidget {
-  const RmCollectionHeader({Key? key}) : super(key: key);
+class RMPickupSummaryHeader extends StatefulWidget {
+  const RMPickupSummaryHeader({Key? key}) : super(key: key);
 
   @override
-  _RmCollectionHeaderState createState() => _RmCollectionHeaderState();
+  _RMPickupSummaryHeaderState createState() => _RMPickupSummaryHeaderState();
 }
 
-class _RmCollectionHeaderState extends State<RmCollectionHeader> {
+class _RMPickupSummaryHeaderState extends State<RMPickupSummaryHeader> {
   DateTime selectedFromDate = DateTime.now();
   DateTime selectedToDate = DateTime.now();
   CommonUtils commonUtils = CommonUtils();
@@ -72,7 +73,7 @@ class _RmCollectionHeaderState extends State<RmCollectionHeader> {
               style: ElevatedButton.styleFrom(primary: AppColors.primaryColor),
               // ignore: avoid_returning_null_for_void
               onPressed: () => DataStreem().controller.add({
-                    "type": "rmCollectionReport",
+                    "type": Screens.rmPickupSummaryReport,
                     "value": {
                       "selectedFromDate":
                           "${selectedFromDate.toLocal()}".split(' ')[0],

@@ -15,7 +15,14 @@ enum Screens {
   tdtmAdmin,
   teamWiseRevenue,
   phleboAttendancePickup,
-  phleboAttendanceReport
+  phleboAttendanceReport,
+  rmPickupSummaryReport,
+  rmWiseBookingCollectionReport,
+  deptCollectionReport,
+  inboundConversionReport,
+  masterPin,
+  zoneWiseCollectionReport,
+  rmAttendanceReport,
 }
 
 class ScreenNames {
@@ -37,4 +44,12 @@ class ScreenNames {
   static const String teamWiseRevenue = "Team Wise Revenue";
   static const String plheboAttendancePickupReport = "Phlebo Attendance Pickup";
   static const String plheboAttendanceReport = "Phlebo Attendance Report";
+  static const String rmPickupSummaryReport = "RM Pickup Summary";
+  static const String rmWiseBookingCollectionReport =
+      "RM Wise Booking Collection";
+  static const String deptCollectionReport = "Dept Collection";
+  static const String inboundConversionReport = "Inbound Conversion";
+  static const String masterPin = "Master Pin";
+  static const String zoneWiseCollectionReport = "Zone Wise Collection";
+  static const String rmAttendanceReport = "RM Attendance Report";
 }

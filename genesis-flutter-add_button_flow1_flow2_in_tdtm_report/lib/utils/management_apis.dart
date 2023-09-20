@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:management_app/models/base_model.dart';
 import 'package:management_app/models/item_model.dart';
 import 'package:management_app/models/otp_verify_model.dart';
+import 'package:management_app/models/rm_attendance_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xml/xml.dart' as xml;
 
 class ManagementApis {
@@ -18,6 +20,8 @@ class ManagementApis {
   //flow2
 
   ManagementApis._internal();
+
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   static const String baseURL =
       "http://hac.centralindia.cloudapp.azure.com/Reportapp_dev/webservice.asmx";
@@ -429,7 +433,7 @@ class ManagementApis {
         "GetTeamWiseRevenue32Result");
   }
 
-  //Team Wise Revenue API Call
+  //Phlebo attendance API Call
   Future<List<BaseModel>> getPhleboAttendancePickupReport(
       String selectedRM, String searchDate, String platformType) async {
     String bodyEnvelope = '''
@@ -448,6 +452,242 @@ class ManagementApis {
     return callAPI(bodyEnvelope, "GET_Phlebo_Attendance_Pickup_and32Response",
         "GET_Phlebo_Attendance_Pickup_and32Result");
   }
+
+  //RM Pickup summary report API Call
+  Future<List<BaseModel>> getRMPickupSummaryReport(
+      String fromDate, String toDate, String platformType) async {
+    String bodyEnvelope = '''
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <getRMPickupSummaryAnd32 xmlns="http://hac.centralindia.cloudapp.azure.com/Reportapp_dev/webservice.asmx">
+      <fromDate>$fromDate</fromDate>
+      <toDate>$toDate</toDate>
+      <etype>$platformType</etype>
+    </getRMPickupSummaryAnd32>
+  </soap:Body>
+</soap:Envelope>
+''';
+
+    return callAPI(bodyEnvelope, "getRMPickupSummaryAnd32Response",
+        "getRMPickupSummaryAnd32Result");
+  }
+
+  //RM Wise Booking Collection report API Call
+  Future<List<BaseModel>> getRMWiseBookingCollectionReport(
+      String date, String time, String platformType) async {
+    String bodyEnvelope = '''
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <RM_Wise_BookingCollectionAnd32 xmlns="http://hac.centralindia.cloudapp.azure.com/Reportapp_dev/webservice.asmx">
+      <Date>$date</Date>
+      <Time>$time</Time>
+      <etype>$platformType</etype>
+    </RM_Wise_BookingCollectionAnd32>
+  </soap:Body>
+</soap:Envelope>
+''';
+
+    return callAPI(bodyEnvelope, "RM_Wise_BookingCollectionAnd32Response",
+        "RM_Wise_BookingCollectionAnd32Result");
+  }
+
+  //Inbound Conversion report API Call
+  Future<List<BaseModel>> getInboundConversionReport(
+      String selectedDate, String platformType) async {
+    String bodyEnvelope = '''
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <InboundConversionReportAndroid32 xmlns="http://hac.centralindia.cloudapp.azure.com/Reportapp_dev/webservice.asmx">
+      <SelectedDate>$selectedDate</SelectedDate>
+      <etype>$platformType</etype>
+    </InboundConversionReportAndroid32>
+  </soap:Body>
+</soap:Envelope>
+''';
+
+    return callAPI(bodyEnvelope, "InboundConversionReportAndroid32Response",
+        "InboundConversionReportAndroid32Result");
+  }
+
+  //Zone Wise Collection report API Call
+  Future<List<BaseModel>> getZoneWiseBookingCollection(
+      String selectedDate, String time, String platformType) async {
+    String bodyEnvelope = '''
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <Zone_Wise_BookingCollectionAnd32 xmlns="http://hac.centralindia.cloudapp.azure.com/Reportapp_dev/webservice.asmx">
+      <Date>$selectedDate</Date>
+      <Time>$time</Time>
+      <etype>$platformType</etype>
+    </Zone_Wise_BookingCollectionAnd32>
+  </soap:Body>
+</soap:Envelope>
+''';
+    return callAPI(bodyEnvelope, "Zone_Wise_BookingCollectionAnd32Response",
+        "Zone_Wise_BookingCollectionAnd32Result");
+  }
+
+//RM Attendance report API Call
+  Future<List<BaseModel>> getRmAttendanceReport(
+      String fromDate, String toDate, String platformType) async {
+    String bodyEnvelope = '''
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <getRMAttendance32 xmlns="http://hac.centralindia.cloudapp.azure.com/Reportapp_dev/webservice.asmx">
+      <fromDate>$fromDate</fromDate>
+      <toDate>$toDate</toDate>
+      <etype>$platformType</etype>
+    </getRMAttendance32>
+  </soap:Body>
+</soap:Envelope>
+''';
+    return callAPI(
+        bodyEnvelope, "getRMAttendance32Response", "getRMAttendance32Result");
+  }
+
+  Future<List<RMAttendanceModel>> getRMAttendanceReport(
+      String soapEnvelope, String responseTag, String resultTag) async {
+    print(soapEnvelope);
+    http.Response response = await http
+        .post(uri,
+            headers: {
+              "Content-Type": "text/xml; charset=utf-8",
+              "Accept": "text/xml"
+            },
+            body: soapEnvelope)
+        .timeout(const Duration(seconds: 40));
+
+    print(response.body);
+
+    var dataXML =
+        await parsingXmlGetElement(response.body, responseTag, resultTag);
+
+    if (response.statusCode == 200) {
+      String decryptedJson =
+          await platform.invokeMethod("decrypt", {"data": dataXML});
+
+      //List<dynamic> parsedListJson = jsonDecode(decryptedJson);
+      List<RMAttendanceModel> itemsList = List<RMAttendanceModel>.from(
+          jsonDecode(decryptedJson).map((i) => RMAttendanceModel.fromJson(i)));
+
+      RMAttendanceModel model = RMAttendanceModel();
+      model = jsonDecode(decryptedJson);
+
+      return itemsList;
+    } else {
+      throw Exception("API call failed please check log");
+    }
+  }
+
+  //Get Current Master Pin report API Call
+  Future<ItemModel> getCurrentUserPin(String platformType) async {
+    String bodyEnvelope = '''
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <GetCurrentUserPins32 xmlns="http://hac.centralindia.cloudapp.azure.com/Reportapp_dev/webservice.asmx">
+      <etype>$platformType</etype>
+    </GetCurrentUserPins32>
+  </soap:Body>
+</soap:Envelope>
+''';
+
+    return getMasterPinAPI(bodyEnvelope, "GetCurrentUserPins32Response",
+        "GetCurrentUserPins32Result");
+  }
+
+  Future<ItemModel> getMasterPinAPI(
+      String soapEnvelope, String responseTag, String resultTag) async {
+    print(soapEnvelope);
+    http.Response response = await http
+        .post(uri,
+            headers: {
+              "Content-Type": "text/xml; charset=utf-8",
+              "Accept": "text/xml"
+            },
+            body: soapEnvelope)
+        .timeout(const Duration(seconds: 40));
+
+    print(response.body);
+
+    var dataXML =
+        await parsingXmlGetElement(response.body, responseTag, resultTag);
+
+    if (response.statusCode == 200) {
+      String decryptedJson =
+          await platform.invokeMethod("decrypt", {"data": dataXML});
+
+      ItemModel model = ItemModel();
+      model.pin = decryptedJson;
+      print("MASTER PIN " + model.pin!);
+
+      return model;
+    } else {
+      throw Exception("API call failed please check log");
+    }
+  }
+
+  // Create New User PIN API Call
+  Future<ItemModel> createNewUserPin(
+      String user, String pin, String platformType) async {
+    final SharedPreferences prefs = await _prefs;
+    String mobileNo = prefs.getString("mobileNumber")!;
+    String bodyEnvelope = '''
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <CreateNewUserPin32 xmlns="http://hac.centralindia.cloudapp.azure.com/Reportapp_dev/webservice.asmx">
+      <phone>$mobileNo</phone>
+      <user>$user</user>
+      <pin>$pin</pin>
+      <etype>$platformType</etype>
+    </CreateNewUserPin32>
+  </soap:Body>
+</soap:Envelope>
+''';
+
+    return creteNewUserPinAPICall(
+        bodyEnvelope, "CreateNewUserPin32Response", "CreateNewUserPin32Result");
+  }
+
+  Future<ItemModel> creteNewUserPinAPICall(
+      String soapEnvelope, String responseTag, String resultTag) async {
+    print(soapEnvelope);
+    http.Response response = await http
+        .post(uri,
+            headers: {
+              "Content-Type": "text/xml; charset=utf-8",
+              "Accept": "text/xml"
+            },
+            body: soapEnvelope)
+        .timeout(const Duration(seconds: 40));
+
+    print(response.body);
+
+    var dataXML =
+        await parsingXmlGetElement(response.body, responseTag, resultTag);
+
+    if (response.statusCode == 200) {
+      String decryptedJson =
+          await platform.invokeMethod("decrypt", {"data": dataXML});
+
+      ItemModel model = ItemModel();
+      model.pin = decryptedJson;
+
+      return model;
+    } else {
+      throw Exception("API call failed please check log");
+    }
+  }
+
+  //GetCurrentUserPins
+  //CreateNewUserPin
+  //{phone=9818606039, user=1, pin=123456}
 
   Future<List<BaseModel>> callAPI(
       String soapEnvelope, String responseTag, String resultTag) async {

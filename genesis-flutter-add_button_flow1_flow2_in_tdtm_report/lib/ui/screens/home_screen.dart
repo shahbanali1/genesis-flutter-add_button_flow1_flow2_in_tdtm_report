@@ -6,6 +6,7 @@ import 'package:management_app/constants/string.dart';
 import 'package:management_app/ui/widgets/grid_view_item_list.dart';
 import 'package:management_app/ui/widgets/navigation_drawer_listview.dart';
 import 'package:management_app/utils/back_press_util.dart';
+import 'package:management_app/utils/common_utils.dart';
 import 'package:management_app/utils/context_util.dart';
 import 'package:management_app/utils/router_util.dart';
 
@@ -43,16 +44,29 @@ class _HomeScreenState extends State<HomeScreen> {
               Strings.appName,
               style: TextStyle(fontSize: 18.0),
             ),
+            actions: <Widget>[
+              IconButton(
+                  icon: Icon(Icons.logout),
+                  onPressed: () {
+                    CommonUtils().confirmationDialogYesNo(
+                        context, "Are you sure you want to logout?", () {
+                      CommonUtils().clearUserDateAndLogout(context);
+                    }, null);
+                  }),
+            ],
           ),
           body: const Center(
             child: GridItemListView(),
           ),
-          drawer: Drawer(
-              child: Expanded(
-            child: ListView(
-              children: [createHeader(), const NavigationDrawerListView()],
-            ),
-          )),
+          drawer: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Drawer(
+                child: Expanded(
+              child: ListView(
+                children: [createHeader(), const NavigationDrawerListView()],
+              ),
+            )),
+          ),
         ),
       ),
     );

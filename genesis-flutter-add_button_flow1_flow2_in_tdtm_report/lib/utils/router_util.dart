@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:management_app/constants/constant.dart';
 import 'package:management_app/constants/screens.dart';
+import 'package:management_app/ui/screens/master_pin_screen.dart';
 import 'package:management_app/ui/screens/report_screen.dart';
 import 'package:management_app/ui/widgets/grid_view_item_list.dart';
 
@@ -111,6 +112,46 @@ class RouterUtil {
             builder: (_) => const ReportScreen(
                 reportToOpen: Screens.phleboAttendanceReport));
 
+      case Constant.rmPickUpSummaryReportRoute:
+        return MaterialPageRoute(
+            settings: settings,
+            builder: (_) => const ReportScreen(
+                reportToOpen: Screens.rmPickupSummaryReport));
+
+      case Constant.rmWiseBookingCollectionReportRoute:
+        return MaterialPageRoute(
+            settings: settings,
+            builder: (_) => const ReportScreen(
+                reportToOpen: Screens.rmWiseBookingCollectionReport));
+
+      case Constant.deptCollectionReportRoute:
+        return MaterialPageRoute(
+            settings: settings,
+            builder: (_) =>
+                const ReportScreen(reportToOpen: Screens.deptCollectionReport));
+
+      case Constant.inboundConversionReportRoute:
+        return MaterialPageRoute(
+            settings: settings,
+            builder: (_) => const ReportScreen(
+                reportToOpen: Screens.inboundConversionReport));
+
+      case Constant.masterPinRoute:
+        return MaterialPageRoute(
+            settings: settings, builder: (_) => const MasterPinScreen());
+
+      case Constant.zoneWiseCollectionReportRoute:
+        return MaterialPageRoute(
+            settings: settings,
+            builder: (_) => const ReportScreen(
+                reportToOpen: Screens.zoneWiseCollectionReport));
+
+      case Constant.rmAttendanceReportRoute:
+        return MaterialPageRoute(
+            settings: settings,
+            builder: (_) =>
+                const ReportScreen(reportToOpen: Screens.rmAttendanceReport));
+
       // case Constant.logoutRoute:
       //   return MaterialPageRoute(
       //       settings: settings,
@@ -165,6 +206,24 @@ class RouterUtil {
       case Constant.phleboAttendanceReportRoute:
         return Navigator.pushNamed(
             context, Constant.phleboAttendanceReportRoute);
+      case Constant.rmPickUpSummaryReportRoute:
+        return Navigator.pushNamed(
+            context, Constant.rmPickUpSummaryReportRoute);
+      case Constant.rmWiseBookingCollectionReportRoute:
+        return Navigator.pushNamed(
+            context, Constant.rmWiseBookingCollectionReportRoute);
+      case Constant.deptCollectionReportRoute:
+        return Navigator.pushNamed(context, Constant.deptCollectionReportRoute);
+      case Constant.inboundConversionReportRoute:
+        return Navigator.pushNamed(
+            context, Constant.inboundConversionReportRoute);
+      case Constant.masterPinRoute:
+        return Navigator.pushNamed(context, Constant.masterPinRoute);
+      case Constant.zoneWiseCollectionReportRoute:
+        return Navigator.pushNamed(
+            context, Constant.zoneWiseCollectionReportRoute);
+      case Constant.rmAttendanceReportRoute:
+        return Navigator.pushNamed(context, Constant.rmAttendanceReportRoute);
       // case Constant.logoutRoute:
       //   Navigator.pop(context);
       //   return Navigator.popAndPushNamed(context, Constant.logoutRoute);

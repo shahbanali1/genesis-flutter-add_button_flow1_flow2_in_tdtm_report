@@ -17,10 +17,11 @@ class PhleboAttendancePickupScreenDataHolder {
   PhleboAttendancePickupHeader? _phleboAttendancePickupHeader;
 
   PhleboAttendancePickupHeader getPhleboAttendancePickupHeader(
-      List<String> rmList, String selectedRM) {
-    _phleboAttendancePickupHeader ??= PhleboAttendancePickupHeader(
+      List<String> rmList, String selectedRM, String dataRowSize) {
+    _phleboAttendancePickupHeader = PhleboAttendancePickupHeader(
       rmList: rmList,
       selectedRM: selectedRM,
+      dataRowSize: dataRowSize,
     );
     return _phleboAttendancePickupHeader!;
   }

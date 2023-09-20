@@ -6,8 +6,12 @@ import 'package:management_app/utils/data_streem.dart';
 class PhleboAttendancePickupHeader extends StatefulWidget {
   final List<String> rmList;
   final String selectedRM;
+  final String dataRowSize;
   const PhleboAttendancePickupHeader(
-      {Key? key, required this.rmList, required this.selectedRM})
+      {Key? key,
+      required this.rmList,
+      required this.selectedRM,
+      required this.dataRowSize})
       : super(key: key);
 
   @override
@@ -24,6 +28,7 @@ class _PhleboAttendancePickupHeaderState
     return Padding(
       padding: const EdgeInsets.only(right: 8.0, top: 8.0, bottom: 8.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -82,6 +87,16 @@ class _PhleboAttendancePickupHeaderState
                     child: const Text("GO")),
               ),
             ],
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0),
+            child: Text(
+              "${widget.dataRowSize} / ${widget.dataRowSize}",
+              style: TextStyle(fontSize: 10),
+            ),
           ),
         ],
       ),

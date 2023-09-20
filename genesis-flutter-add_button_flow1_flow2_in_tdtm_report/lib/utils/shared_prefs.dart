@@ -9,9 +9,18 @@ class SharedPrefs {
 
   SharedPrefs._internal();
 
-  void updateUserLoggedIn() async {
+  void setLoggedIn(bool status) async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    _prefs.setBool('isLoggedIn', true);
+    if (status) {
+      _prefs.setBool('isLoggedIn', true);
+    } else {
+      _prefs.setBool('isLoggedIn', false);
+    }
+  }
+
+  Future<bool?> isLoggedIn() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    return _prefs.getBool('isLoggedIn');
   }
 
   void setUserId(String userId) async {
@@ -44,6 +53,17 @@ class SharedPrefs {
   getAppCode() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? stringValue = prefs.getString("appCode");
+    return stringValue;
+  }
+
+  void setUserMobileNumber(String mobileNumber) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("mobileNumber", mobileNumber);
+  }
+
+  getUserMobileNumber() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? stringValue = prefs.getString("mobileNumber");
     return stringValue;
   }
 

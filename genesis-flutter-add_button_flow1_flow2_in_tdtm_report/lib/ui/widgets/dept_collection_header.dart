@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:management_app/constants/app_colors.dart';
-import 'package:management_app/utils/common_utils.dart';
+import 'package:management_app/constants/screens.dart';
 import 'package:management_app/utils/data_streem.dart';
 
-class RmCollectionHeader extends StatefulWidget {
-  const RmCollectionHeader({Key? key}) : super(key: key);
+class DEPTCollectionHeader extends StatefulWidget {
+  const DEPTCollectionHeader({Key? key}) : super(key: key);
 
   @override
-  _RmCollectionHeaderState createState() => _RmCollectionHeaderState();
+  State<DEPTCollectionHeader> createState() => _DEPTCollectionHeaderState();
 }
 
-class _RmCollectionHeaderState extends State<RmCollectionHeader> {
+class _DEPTCollectionHeaderState extends State<DEPTCollectionHeader> {
   DateTime selectedFromDate = DateTime.now();
   DateTime selectedToDate = DateTime.now();
-  CommonUtils commonUtils = CommonUtils();
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -72,7 +71,7 @@ class _RmCollectionHeaderState extends State<RmCollectionHeader> {
               style: ElevatedButton.styleFrom(primary: AppColors.primaryColor),
               // ignore: avoid_returning_null_for_void
               onPressed: () => DataStreem().controller.add({
-                    "type": "rmCollectionReport",
+                    "type": Screens.deptCollectionReport,
                     "value": {
                       "selectedFromDate":
                           "${selectedFromDate.toLocal()}".split(' ')[0],

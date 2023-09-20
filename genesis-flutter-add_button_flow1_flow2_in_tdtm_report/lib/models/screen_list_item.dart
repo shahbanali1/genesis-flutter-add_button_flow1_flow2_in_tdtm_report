@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:management_app/constants/constant.dart';
+import 'package:management_app/constants/screens.dart';
 import 'package:management_app/constants/string.dart';
 
 class ScreenListItem {
@@ -64,26 +65,63 @@ const List<ScreenListItem> getListItem = <ScreenListItem>[
       title: Strings.inboundTodayStatus,
       routeName: Constant.inboundTodayStatus,
       imageIcon: AssetImage('assets/ic_inbound_todaystatus.png')),
-
-  ScreenListItem(
-      title: Strings.routeTracking,
-      routeName: Constant.routeTracking,
-      imageIcon: AssetImage('assets/ic_tracking.png')),
+//This Report is hides now as per client requirement (Anish Sir)
+  // ScreenListItem(
+  //     title: Strings.routeTracking,
+  //     routeName: Constant.routeTracking,
+  //     imageIcon: AssetImage('assets/ic_tracking.png')),
 
   ScreenListItem(
       title: Strings.teamWiseRevenue,
       routeName: Constant.teamWiseRevenueRoute,
       imageIcon: AssetImage('assets/ic_team_wise_revenue.png')),
 
+  //This Report is hides now as per client requirement (Anish Sir)
+  // ScreenListItem(
+  //     title: Strings.plheboAttendancePickup,
+  //     routeName: Constant.phleboAttendancePickupRoute,
+  //     imageIcon: AssetImage('assets/ic_phlebo_attendance_pickup.png')),
+
+  //This Report is hides now as per client requirement (Anish Sir)
+  // ScreenListItem(
+  //     title: Strings.plheboAttendanceReport,
+  //     routeName: Constant.phleboAttendanceReportRoute,
+  //     imageIcon: AssetImage('assets/ic_phlebo_attendance_pickup.png')),
+
   ScreenListItem(
-      title: Strings.plheboAttendancePickup,
-      routeName: Constant.phleboAttendancePickupRoute,
+      title: ScreenNames.rmPickupSummaryReport,
+      routeName: Constant.rmPickUpSummaryReportRoute,
       imageIcon: AssetImage('assets/ic_phlebo_attendance_pickup.png')),
 
   ScreenListItem(
-      title: Strings.plheboAttendanceReport,
-      routeName: Constant.phleboAttendanceReportRoute,
+      title: ScreenNames.rmWiseBookingCollectionReport,
+      routeName: Constant.rmWiseBookingCollectionReportRoute,
       imageIcon: AssetImage('assets/ic_phlebo_attendance_pickup.png')),
+
+  ScreenListItem(
+      title: ScreenNames.deptCollectionReport,
+      routeName: Constant.deptCollectionReportRoute,
+      imageIcon: AssetImage('assets/ic_rm_collection.png')),
+
+  ScreenListItem(
+      title: ScreenNames.inboundConversionReport,
+      routeName: Constant.inboundConversionReportRoute,
+      imageIcon: AssetImage('assets/ic_team_wise_revenue.png')),
+
+  ScreenListItem(
+      title: ScreenNames.masterPin,
+      routeName: Constant.masterPinRoute,
+      imageIcon: AssetImage('assets/ic_phlebo_attendance_pickup.png')),
+
+  ScreenListItem(
+      title: ScreenNames.zoneWiseCollectionReport,
+      routeName: Constant.zoneWiseCollectionReportRoute,
+      imageIcon: AssetImage('assets/ic_phlebo_attendance_pickup.png')),
+
+  ScreenListItem(
+      title: ScreenNames.rmAttendanceReport,
+      routeName: Constant.rmAttendanceReportRoute,
+      imageIcon: AssetImage('assets/ic_attendance.png')),
 
   // ScreenListItem(
   //     title: Strings.logout,

@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:management_app/holders/agent_pickup_screen_data_holder.dart';
 import 'package:management_app/holders/corporate_report_screen_data_holder.dart';
+import 'package:management_app/holders/dept_collection_data_holder.dart';
 import 'package:management_app/holders/govt_lab_screen_data_holder.dart';
 import 'package:management_app/holders/hotspot_screen_data_holder.dart';
 import 'package:management_app/holders/hotspot_zone_wise_data_holder.dart';
+import 'package:management_app/holders/inbound_conversion_data_holder.dart';
 import 'package:management_app/holders/inbound_screen_data_holder.dart';
 import 'package:management_app/holders/lead_wise_conversion_screen_data_holder.dart';
 import 'package:management_app/holders/performance_of_the_day_data_holder.dart';
 import 'package:management_app/holders/phlebo_attendance_pickup_data_holder.dart';
+import 'package:management_app/holders/rm_attendance_data_holder.dart';
 import 'package:management_app/holders/rm_collection_report_data_holder.dart';
+import 'package:management_app/holders/rm_pickup_summary_data_holder.dart';
+import 'package:management_app/holders/rm_wise_booking_collection_data_holder.dart';
 import 'package:management_app/holders/tdtm_admin_screen_data_holder.dart';
 import 'package:management_app/holders/tdtm_screen_data_holder.dart';
 import 'package:management_app/holders/team_wise_revenue_data_holder.dart';
 import 'package:management_app/holders/verifier_screen_data_holder.dart';
+import 'package:management_app/holders/zone_wise_collection_data_holder.dart';
 import 'package:management_app/models/base_model.dart';
 import 'package:management_app/utils/common_utils.dart';
 import 'package:management_app/utils/date_utils_custom.dart';
@@ -109,7 +115,7 @@ class ScreenHandler {
       String selectedFromDate, String selectedToDate) {
     return ManagementApis().getRMCollectionReport(
         selectedFromDate,
-        selectedFromDate,
+        selectedToDate,
         RMCollectionReportDateHolder().type,
         commonUtils.checkPlatformType());
   }
@@ -218,9 +224,10 @@ class ScreenHandler {
         commonUtils.checkPlatformType());
   }
 
-  Widget getPhleboAttendancePickupHeader(List<String> listUniqueRM, String rm) {
+  Widget getPhleboAttendancePickupHeader(
+      List<String> listUniqueRM, String rm, String dataRowSize) {
     return PhleboAttendancePickupScreenDataHolder()
-        .getPhleboAttendancePickupHeader(listUniqueRM, rm);
+        .getPhleboAttendancePickupHeader(listUniqueRM, rm, dataRowSize);
   }
 
   Future<List<BaseModel>> getPhleboAttendancePickupReportData(
@@ -229,5 +236,67 @@ class ScreenHandler {
         selectedRM,
         PhleboAttendancePickupScreenDataHolder().searchDate,
         commonUtils.checkPlatformType());
+  }
+
+  Widget getRMPickupSummaryHeader() {
+    return RMPickupSummaryScreenDataHolder().getRMPickupSummaryHeader();
+  }
+
+  Future<List<BaseModel>> getRMPickupSummaryReportData(
+      String selectedFromDate, String selectedToDate) {
+    return managementApis.getRMPickupSummaryReport(
+        selectedFromDate, selectedToDate, commonUtils.checkPlatformType());
+  }
+
+  Widget getRMWiseBookingCollectionHeader() {
+    return RMWiseBookingCollectionDataHolder()
+        .getRMWiseBookingCollectionHeader();
+  }
+
+  Future<List<BaseModel>> getRMWiseBookingCollectionReportData(
+      String selectedDate, selectedTime) {
+    return managementApis.getRMWiseBookingCollectionReport(
+        selectedDate, selectedTime, commonUtils.checkPlatformType());
+  }
+
+  Widget getDEPTCollecctionHeader() {
+    return DEPTCollectionDateHolder().getDEPTCollecctionHeader();
+  }
+
+  Future<List<BaseModel>> getDEPTCollectionReportData(
+      String selectedFromDate, String selectedToDate) {
+    return managementApis.getRMCollectionReport(
+        selectedFromDate,
+        selectedToDate,
+        DEPTCollectionDateHolder().type,
+        commonUtils.checkPlatformType());
+  }
+
+  Widget getInboundConversionHeader() {
+    return InboundConversionDateHolder().getInboundConversionHeader();
+  }
+
+  Future<List<BaseModel>> getInboundConversionReportData(String selectedDate) {
+    return managementApis.getInboundConversionReport(
+        selectedDate, commonUtils.checkPlatformType());
+  }
+
+  Widget getZoneWiseCollectionHeader() {
+    return ZoneWiseCollectionDataHolder().getZoneWiseCollectionHeader();
+  }
+
+  Future<List<BaseModel>> getZoneWiseCollectionReportData(String selectedDate) {
+    return managementApis.getZoneWiseBookingCollection(selectedDate,
+        ZoneWiseCollectionDataHolder().time, commonUtils.checkPlatformType());
+  }
+
+  Widget getRMAttendanceHeader() {
+    return RmAttendanceDateHolder().getRMAttendanceHeader();
+  }
+
+  Future<List<BaseModel>> getRMAttendanceReportData(
+      String selectedFromDate, String selectedToDate) {
+    return managementApis.getRmAttendanceReport(
+        selectedFromDate, selectedToDate, commonUtils.checkPlatformType());
   }
 }

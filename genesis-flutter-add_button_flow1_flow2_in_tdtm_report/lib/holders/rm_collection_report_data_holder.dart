@@ -21,8 +21,4 @@ class RMCollectionReportDateHolder {
     _rmCollectionHeader ??= const RmCollectionHeader();
     return _rmCollectionHeader!;
   }
-
-  // String getReportDate() {
-  //   return DateUtils.getCurrentFormmatedDate("MM-dd-yyyy");
-  // }
 }
