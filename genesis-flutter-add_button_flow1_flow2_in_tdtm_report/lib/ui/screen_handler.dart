@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:management_app/holders/agent_pickup_screen_data_holder.dart';
 import 'package:management_app/holders/corporate_report_screen_data_holder.dart';
 import 'package:management_app/holders/dept_collection_data_holder.dart';
+import 'package:management_app/holders/disposition_data_holder.dart';
 import 'package:management_app/holders/govt_lab_screen_data_holder.dart';
 import 'package:management_app/holders/hotspot_screen_data_holder.dart';
 import 'package:management_app/holders/hotspot_zone_wise_data_holder.dart';
@@ -10,6 +11,7 @@ import 'package:management_app/holders/inbound_screen_data_holder.dart';
 import 'package:management_app/holders/lead_wise_conversion_screen_data_holder.dart';
 import 'package:management_app/holders/performance_of_the_day_data_holder.dart';
 import 'package:management_app/holders/phlebo_attendance_pickup_data_holder.dart';
+import 'package:management_app/holders/projection_data_holder.dart';
 import 'package:management_app/holders/rm_attendance_data_holder.dart';
 import 'package:management_app/holders/rm_collection_report_data_holder.dart';
 import 'package:management_app/holders/rm_pickup_summary_data_holder.dart';
@@ -298,5 +300,27 @@ class ScreenHandler {
       String selectedFromDate, String selectedToDate) {
     return managementApis.getRmAttendanceReport(
         selectedFromDate, selectedToDate, commonUtils.checkPlatformType());
+  }
+
+  Widget getProjectionHeader() {
+    return ProjectionDataHolder().getProjectionHeader();
+  }
+
+  Future<List<BaseModel>> getProjectionReportData(
+      String fromDate, String toDate, String specialPackage) {
+    return managementApis.getTeamWiseRevenueReport(
+        fromDate, toDate, specialPackage, commonUtils.checkPlatformType());
+  }
+
+  Widget getDispositionHeader() {
+    return DispositionDataHolder().getDispositionHeader();
+  }
+
+  Future<List<BaseModel>> getDispositionReportData(
+    String fromDate,
+    String toDate,
+  ) {
+    return managementApis.getDispositionReport(fromDate, toDate,
+        DispositionDataHolder().dispoType, commonUtils.checkPlatformType());
   }
 }

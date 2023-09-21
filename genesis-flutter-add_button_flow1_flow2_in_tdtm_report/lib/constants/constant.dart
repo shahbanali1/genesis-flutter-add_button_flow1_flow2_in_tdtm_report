@@ -33,6 +33,9 @@ class Constant {
   static const String zoneWiseCollectionReportRoute =
       '/zone_wise_collection_report_route';
   static const String rmAttendanceReportRoute = '/rm_attendance_report_route';
+  static const String projectionReportRoute = '/projection_report_route';
+  static const String dispositionReportRoute = '/disposition_report_route';
+  static const String createPromoCodeRoute = '/create_promo_code_route';
 
   static const String tabTotal = 'Total';
   static const String tabRetail = 'Retail';

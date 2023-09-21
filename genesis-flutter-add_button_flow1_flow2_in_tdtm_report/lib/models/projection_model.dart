@@ -1,52 +1,40 @@
-class TeamWiseRevenueModel {
+class ProjectionModel {
   String TeamSeq = "";
   String TeamLocation = "";
-  String TeamName = "";
-  String TL = "";
   String SumofPricePaid = "";
-  String NoofOrders = "";
-  String AvgOrderSize = "0";
   String MAN_DAYS = "";
   String perSeatProductivity = "";
-  String teamWisePricePaid = "0";
+  String AvgManDays = "0";
+  String ProjTeamWise = "";
 
-  TeamWiseRevenueModel(
+  ProjectionModel(
       {required this.TeamSeq,
       required this.TeamLocation,
-      required this.TeamName,
-      required this.TL,
       required this.SumofPricePaid,
-      required this.NoofOrders,
-      required this.AvgOrderSize,
       required this.MAN_DAYS,
       required this.perSeatProductivity,
-      required this.teamWisePricePaid});
+      required this.AvgManDays,
+      required this.ProjTeamWise});
 
-  TeamWiseRevenueModel.fromJson(Map<String, dynamic> json) {
+  ProjectionModel.fromJson(Map<String, dynamic> json) {
     TeamSeq = json['TeamSeq'] ?? "";
     TeamLocation = json['TeamLocation'] ?? "";
-    TeamName = json['TeamName'] ?? "";
-    TL = json['TL'] ?? "";
     SumofPricePaid = json['SumofPricePaid'] ?? "";
-    NoofOrders = json['NoofOrders'] ?? "";
-    AvgOrderSize = json['AvgOrderSize'] ?? "0";
     MAN_DAYS = json['MAN_DAYS'] ?? "";
     perSeatProductivity = json['perSeatProductivity'] ?? "";
-    teamWisePricePaid = json['teamWisePricePaid'] ?? "0";
+    AvgManDays = json['AvgManDays'] ?? "";
+    ProjTeamWise = json['ProjTeamWise'] ?? "0";
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['TeamSeq'] = this.TeamSeq;
     data['TeamLocation'] = this.TeamLocation;
-    data['TeamName'] = this.TeamName;
-    data['TL'] = this.TL;
     data['SumofPricePaid'] = this.SumofPricePaid;
-    data['NoofOrders'] = this.NoofOrders;
-    data['AvgOrderSize'] = this.AvgOrderSize;
     data['MAN_DAYS'] = this.MAN_DAYS;
     data['perSeatProductivity'] = this.perSeatProductivity;
-    data['teamWisePricePaid'] = this.teamWisePricePaid;
+    data['AvgManDays'] = this.AvgManDays;
+    data['ProjTeamWise'] = this.ProjTeamWise;
     return data;
   }
 }

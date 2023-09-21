@@ -4,6 +4,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:management_app/constants/app_colors.dart';
+import 'package:management_app/models/package_test_type_model.dart';
 import 'package:management_app/ui/screens/login_screen.dart';
 import 'package:management_app/utils/shared_prefs.dart';
 
@@ -213,6 +214,35 @@ class CommonUtils {
     AppColors.colorYellowLt,
     AppColors.colorYellowDk,
   ];
+
+  List<String> getPersentageList() {
+    List<String> persentageList = [];
+    for (int i = 1; i <= 25; i++) {
+      persentageList.add("$i");
+    }
+    return persentageList;
+  }
+
+  List<String> getMaxList() {
+    List<String> maxList = [];
+    for (int i = 1; i <= 5; i++) {
+      maxList.add("$i");
+    }
+    return maxList;
+  }
+
+  List<PackageTestTypeModel> getTestType() {
+    List<PackageTestTypeModel> testTypeList = [];
+    testTypeList
+        .add(PackageTestTypeModel(testTypeShow: "Packages", testType: "P"));
+    testTypeList
+        .add(PackageTestTypeModel(testTypeShow: "Tests", testType: "T"));
+    testTypeList
+        .add(PackageTestTypeModel(testTypeShow: "Services", testType: "S"));
+    testTypeList.add(PackageTestTypeModel(
+        testTypeShow: "Custom Package/Test", testType: "R"));
+    return testTypeList;
+  }
 
   static String getSubstractedMonthDate(DateTime now, int monthsToSubstract) {
     DateTime substracted =

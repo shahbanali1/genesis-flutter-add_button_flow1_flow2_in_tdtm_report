@@ -23,6 +23,9 @@ enum Screens {
   masterPin,
   zoneWiseCollectionReport,
   rmAttendanceReport,
+  projectionReport,
+  dispositionReport,
+  createPromoCode,
 }
 
 class ScreenNames {
@@ -52,4 +55,7 @@ class ScreenNames {
   static const String masterPin = "Master Pin";
   static const String zoneWiseCollectionReport = "Zone Wise Collection";
   static const String rmAttendanceReport = "RM Attendance Report";
+  static const String projectionReport = "Projection Report";
+  static const String dispositionReport = "Disposition Report";
+  static const String createPromoCode = "Create Promo Code";
 }

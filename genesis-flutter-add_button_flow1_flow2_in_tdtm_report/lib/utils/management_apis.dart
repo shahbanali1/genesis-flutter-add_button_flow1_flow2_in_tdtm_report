@@ -550,6 +550,26 @@ class ManagementApis {
         bodyEnvelope, "getRMAttendance32Response", "getRMAttendance32Result");
   }
 
+  //Disposition report API Call
+  Future<List<BaseModel>> getDispositionReport(String fromDate, String toDate,
+      String dispoType, String platformType) async {
+    String bodyEnvelope = '''
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <GetDispositionReportAndroid32 xmlns="http://hac.centralindia.cloudapp.azure.com/Reportapp_dev/webservice.asmx">
+      <fromDate>$fromDate</fromDate>
+      <toDate>$toDate</toDate>
+      <dispoType>$dispoType</dispoType>
+      <etype>$platformType</etype>
+    </GetDispositionReportAndroid32>
+  </soap:Body>
+</soap:Envelope>
+''';
+    return callAPI(bodyEnvelope, "GetDispositionReportAndroid32Response",
+        "GetDispositionReportAndroid32Result");
+  }
+
   Future<List<RMAttendanceModel>> getRMAttendanceReport(
       String soapEnvelope, String responseTag, String resultTag) async {
     print(soapEnvelope);

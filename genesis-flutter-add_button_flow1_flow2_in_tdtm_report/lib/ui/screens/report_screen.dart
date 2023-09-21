@@ -6,6 +6,7 @@ import 'package:management_app/constants/screens.dart';
 import 'package:management_app/holders/agent_pickup_screen_data_holder.dart';
 import 'package:management_app/holders/corporate_report_screen_data_holder.dart';
 import 'package:management_app/holders/dept_collection_data_holder.dart';
+import 'package:management_app/holders/disposition_data_holder.dart';
 import 'package:management_app/holders/govt_lab_screen_data_holder.dart';
 import 'package:management_app/holders/hotspot_screen_data_holder.dart';
 import 'package:management_app/holders/hotspot_zone_wise_data_holder.dart';
@@ -14,6 +15,7 @@ import 'package:management_app/holders/inbound_screen_data_holder.dart';
 import 'package:management_app/holders/lead_wise_conversion_screen_data_holder.dart';
 import 'package:management_app/holders/performance_of_the_day_data_holder.dart';
 import 'package:management_app/holders/phlebo_attendance_pickup_data_holder.dart';
+import 'package:management_app/holders/projection_data_holder.dart';
 import 'package:management_app/holders/rm_attendance_data_holder.dart';
 import 'package:management_app/holders/rm_collection_report_data_holder.dart';
 import 'package:management_app/holders/rm_pickup_summary_data_holder.dart';
@@ -26,7 +28,10 @@ import 'package:management_app/models/base_model.dart';
 import 'package:management_app/models/phlebo_manager.dart';
 import 'package:management_app/ui/screen_handler.dart';
 import 'package:management_app/ui/widgets/data_table_widget.dart';
+import 'package:management_app/ui/widgets/disposition_data_table.dart';
 import 'package:management_app/ui/widgets/inbound_conversion_data_table.dart';
+import 'package:management_app/ui/widgets/projection_data_table.dart';
+import 'package:management_app/ui/widgets/rm_attendance_data_table_widget.dart';
 import 'package:management_app/ui/widgets/tdtm_admin_data_table_widget.dart';
 import 'package:management_app/ui/widgets/tdtm_data_table_widget.dart';
 import 'package:management_app/ui/widgets/team_wise_revenue_data_table.dart';
@@ -178,6 +183,19 @@ class ReportState extends State<ReportScreen> {
               value["selectedFromDate"],
               value["selectedToDate"],
             );
+          } else if (type == Screens.projectionReport) {
+            Map value = map["value"];
+            reportData = ScreenHandler().getProjectionReportData(
+              value["selectedFromDate"],
+              value["selectedToDate"],
+              value["isZeroValuePackage"],
+            );
+          } else if (type == Screens.dispositionReport) {
+            Map value = map["value"];
+            reportData = ScreenHandler().getDispositionReportData(
+              value["selectedFromDate"],
+              value["selectedToDate"],
+            );
           }
         });
       }
@@ -315,6 +333,18 @@ class ReportState extends State<ReportScreen> {
             RmAttendanceDateHolder().fromDate, RmAttendanceDateHolder().toDate);
         break;
 
+      case Screens.projectionReport:
+        reportData = ScreenHandler().getProjectionReportData(
+            ProjectionDataHolder().fromDate,
+            ProjectionDataHolder().toDate,
+            ProjectionDataHolder().specialPackage);
+        break;
+
+      case Screens.dispositionReport:
+        reportData = ScreenHandler().getDispositionReportData(
+            DispositionDataHolder().fromDate, DispositionDataHolder().toDate);
+        break;
+
       default:
     }
   }
@@ -381,6 +411,18 @@ class ReportState extends State<ReportScreen> {
                   );
                 } else if (widget.reportToOpen == Screens.teamWiseRevenue) {
                   return TeamWiseRevenueDataTable(
+                    reportData: snapshot.data!,
+                  );
+                } else if (widget.reportToOpen == Screens.dispositionReport) {
+                  return DispositionDataTable(
+                    reportData: snapshot.data!,
+                  );
+                } else if (widget.reportToOpen == Screens.projectionReport) {
+                  return ProjectionDataTableWidget(
+                    reportData: snapshot.data!,
+                  );
+                } else if (widget.reportToOpen == Screens.rmAttendanceReport) {
+                  return RmAttendanceDataTableWidget(
                     reportData: snapshot.data!,
                   );
                 } else {
@@ -489,6 +531,10 @@ class ReportState extends State<ReportScreen> {
         return ScreenHandler().getZoneWiseCollectionHeader();
       case Screens.rmAttendanceReport:
         return ScreenHandler().getRMAttendanceHeader();
+      case Screens.projectionReport:
+        return ScreenHandler().getProjectionHeader();
+      case Screens.dispositionReport:
+        return ScreenHandler().getDispositionHeader();
       // case Screens.phleboAttendancePickup:
       //   return ScreenHandler().getPhleboAttendancePickupHeader();
 
@@ -579,6 +625,12 @@ class ReportState extends State<ReportScreen> {
         break;
       case Screens.rmAttendanceReport:
         title = ScreenNames.rmAttendanceReport;
+        break;
+      case Screens.projectionReport:
+        title = ScreenNames.projectionReport;
+        break;
+      case Screens.dispositionReport:
+        title = ScreenNames.dispositionReport;
         break;
       default:
         title = "Report";

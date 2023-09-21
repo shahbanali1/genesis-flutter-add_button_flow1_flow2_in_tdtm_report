@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:management_app/constants/constant.dart';
 import 'package:management_app/constants/screens.dart';
+import 'package:management_app/ui/screens/create_promo_code_screen.dart';
 import 'package:management_app/ui/screens/master_pin_screen.dart';
 import 'package:management_app/ui/screens/report_screen.dart';
 import 'package:management_app/ui/widgets/grid_view_item_list.dart';
@@ -152,6 +153,22 @@ class RouterUtil {
             builder: (_) =>
                 const ReportScreen(reportToOpen: Screens.rmAttendanceReport));
 
+      case Constant.projectionReportRoute:
+        return MaterialPageRoute(
+            settings: settings,
+            builder: (_) =>
+                const ReportScreen(reportToOpen: Screens.projectionReport));
+
+      case Constant.dispositionReportRoute:
+        return MaterialPageRoute(
+            settings: settings,
+            builder: (_) =>
+                const ReportScreen(reportToOpen: Screens.dispositionReport));
+
+      case Constant.createPromoCodeRoute:
+        return MaterialPageRoute(
+            settings: settings, builder: (_) => const CreatePromoCodeScreen());
+
       // case Constant.logoutRoute:
       //   return MaterialPageRoute(
       //       settings: settings,
@@ -224,6 +241,12 @@ class RouterUtil {
             context, Constant.zoneWiseCollectionReportRoute);
       case Constant.rmAttendanceReportRoute:
         return Navigator.pushNamed(context, Constant.rmAttendanceReportRoute);
+      case Constant.projectionReportRoute:
+        return Navigator.pushNamed(context, Constant.projectionReportRoute);
+      case Constant.dispositionReportRoute:
+        return Navigator.pushNamed(context, Constant.dispositionReportRoute);
+      case Constant.createPromoCodeRoute:
+        return Navigator.pushNamed(context, Constant.createPromoCodeRoute);
       // case Constant.logoutRoute:
       //   Navigator.pop(context);
       //   return Navigator.popAndPushNamed(context, Constant.logoutRoute);

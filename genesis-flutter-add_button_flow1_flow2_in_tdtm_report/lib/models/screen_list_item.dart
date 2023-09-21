@@ -66,10 +66,10 @@ const List<ScreenListItem> getListItem = <ScreenListItem>[
       routeName: Constant.inboundTodayStatus,
       imageIcon: AssetImage('assets/ic_inbound_todaystatus.png')),
 //This Report is hides now as per client requirement (Anish Sir)
-  // ScreenListItem(
-  //     title: Strings.routeTracking,
-  //     routeName: Constant.routeTracking,
-  //     imageIcon: AssetImage('assets/ic_tracking.png')),
+  ScreenListItem(
+      title: Strings.routeTracking,
+      routeName: Constant.routeTracking,
+      imageIcon: AssetImage('assets/ic_tracking.png')),
 
   ScreenListItem(
       title: Strings.teamWiseRevenue,
@@ -122,6 +122,25 @@ const List<ScreenListItem> getListItem = <ScreenListItem>[
       title: ScreenNames.rmAttendanceReport,
       routeName: Constant.rmAttendanceReportRoute,
       imageIcon: AssetImage('assets/ic_attendance.png')),
+
+  ScreenListItem(
+    title: ScreenNames.projectionReport,
+    routeName: Constant.projectionReportRoute,
+    imageIcon: AssetImage('assets/ic_projection.png'),
+  ),
+
+  ScreenListItem(
+    title: ScreenNames.dispositionReport,
+    routeName: Constant.dispositionReportRoute,
+    imageIcon: AssetImage('assets/ic_govt_lab.png'),
+  ),
+
+  //This Report is hides now as per client requirement (Anish Sir)
+  // ScreenListItem(
+  //   title: ScreenNames.createPromoCode,
+  //   routeName: Constant.createPromoCodeRoute,
+  //   imageIcon: AssetImage('assets/ic_rm_collection.png'),
+  // ),
 
   // ScreenListItem(
   //     title: Strings.logout,
