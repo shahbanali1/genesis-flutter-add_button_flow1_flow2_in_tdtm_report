@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:management_app/constants/app_colors.dart';
 import 'package:management_app/constants/screens.dart';
 import 'package:management_app/utils/common_utils.dart';
 import 'package:management_app/utils/data_streem.dart';
@@ -30,6 +31,10 @@ class _ProjectionHeaderState extends State<ProjectionHeader> {
       child: Column(
         children: [
           CheckboxListTile(
+            activeColor: AppColors.primaryColor,
+            selectedTileColor: AppColors.primaryColor,
+            fillColor: MaterialStateColor.resolveWith(
+                (states) => AppColors.primaryColor),
             title: Text('Zero Value Package'),
             value: isZeroValuePackage, // Set the initial value of the checkbox
             onChanged: (bool? value) {
@@ -45,7 +50,7 @@ class _ProjectionHeaderState extends State<ProjectionHeader> {
             children: [
               IconButton(
                 icon: const Icon(Icons.date_range_outlined,
-                    size: 30, color: Colors.blue),
+                    size: 30, color: AppColors.primaryColor),
                 onPressed: () {
                   showFromDateDialog(context);
                 },
@@ -56,7 +61,7 @@ class _ProjectionHeaderState extends State<ProjectionHeader> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.blue),
+                        border: Border.all(color: AppColors.primaryColor),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(5.0))),
                     child: Padding(
@@ -70,7 +75,7 @@ class _ProjectionHeaderState extends State<ProjectionHeader> {
                 padding: const EdgeInsets.only(left: 8.0),
                 child: IconButton(
                   icon: const Icon(Icons.date_range_outlined,
-                      size: 30, color: Colors.blue),
+                      size: 30, color: AppColors.primaryColor),
                   onPressed: () {
                     showToDateDialog(context);
                   },
@@ -82,7 +87,7 @@ class _ProjectionHeaderState extends State<ProjectionHeader> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.blue),
+                        border: Border.all(color: AppColors.primaryColor),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(5.0))),
                     child: Padding(
@@ -95,6 +100,8 @@ class _ProjectionHeaderState extends State<ProjectionHeader> {
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryColor),
                     onPressed: () {
                       dateValidation(selectedFromDate, selectedToDate);
                     },
@@ -176,7 +183,7 @@ class _ProjectionHeaderState extends State<ProjectionHeader> {
       context: context,
       initialDate: selectedFromDate, // Refer step 1
       firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
+      lastDate: DateTime.now(),
     );
     if (picked != null && picked != selectedFromDate) {
       setState(() {
@@ -190,7 +197,7 @@ class _ProjectionHeaderState extends State<ProjectionHeader> {
       context: context,
       initialDate: selectedToDate, // Refer step 1
       firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
+      lastDate: DateTime.now(),
     );
     if (picked != null && picked != selectedToDate) {
       setState(() {

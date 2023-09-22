@@ -12,7 +12,7 @@ class ZoneWiseCollectionDataHolder {
   ZoneWiseCollectionDataHolder._internal();
 
   String selectedDate = DateUtilsCustom.getCurrentFormmatedDate();
-  String time = "09:00-10:00";
+  String selectedTimeSlot = "15:00-16:00";
 
   ZoneWiseCollectionHeader? _header;
 

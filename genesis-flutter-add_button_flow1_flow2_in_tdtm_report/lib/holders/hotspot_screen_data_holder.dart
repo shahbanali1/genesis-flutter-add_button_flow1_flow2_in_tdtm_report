@@ -1,5 +1,4 @@
 import 'package:management_app/ui/widgets/hot_spot_header.dart';
-import 'package:management_app/utils/date_utils_custom.dart';
 
 class HotSpotScreenDataHolder {
   static final HotSpotScreenDataHolder _screenHandler =

@@ -1255,6 +1255,7 @@ class _TDTMDataTableWidgetState extends State<TDTMDataTableWidget> {
   }
 }
 
+// ignore: must_be_immutable
 class RenderGraphWidget extends StatelessWidget {
   final List<TDTMModel> chartData;
   RenderGraphWidget({

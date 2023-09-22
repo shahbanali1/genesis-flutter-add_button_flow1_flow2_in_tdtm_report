@@ -92,7 +92,7 @@ class _RMPickupSummaryHeaderState extends State<RMPickupSummaryHeader> {
       context: context,
       initialDate: selectedFromDate, // Refer step 1
       firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
+      lastDate: DateTime.now(),
     );
     if (picked != null && picked != selectedFromDate) {
       setState(() {
@@ -106,7 +106,7 @@ class _RMPickupSummaryHeaderState extends State<RMPickupSummaryHeader> {
       context: context,
       initialDate: selectedToDate, // Refer step 1
       firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
+      lastDate: DateTime.now(),
     );
     if (picked != null && picked != selectedToDate) {
       setState(() {

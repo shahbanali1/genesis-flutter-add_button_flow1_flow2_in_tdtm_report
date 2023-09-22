@@ -1,38 +1,61 @@
 import 'dart:collection';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:management_app/constants/app_colors.dart';
+import 'package:management_app/models/attendance_report_model.dart';
 import 'package:management_app/models/base_model.dart';
 import 'package:management_app/models/rm_attendance_model.dart';
 
-class RmAttendanceDataTableWidget extends StatefulWidget {
+class RmAttendanceDataTableWidgetTest extends StatefulWidget {
   final List<BaseModel> reportData;
-  const RmAttendanceDataTableWidget({
+  const RmAttendanceDataTableWidgetTest({
     Key? key,
     required this.reportData,
   }) : super(key: key);
 
   @override
-  State<RmAttendanceDataTableWidget> createState() =>
-      _RmAttendanceDataTableWidgetState();
+  State<RmAttendanceDataTableWidgetTest> createState() =>
+      _RmAttendanceDataTableWidgetTestState();
 }
 
-class _RmAttendanceDataTableWidgetState
-    extends State<RmAttendanceDataTableWidget> {
-  List<DataColumn> getTableHeaders(List<RMAttendanceModel>? model) {
+class _RmAttendanceDataTableWidgetTestState
+    extends State<RmAttendanceDataTableWidgetTest> {
+  List<DataColumn> getTableHeaders(List<dynamic> data) {
     List<DataColumn> columns = [];
 
     // var rawData = model.toJson();
     bool shouldAddDate = true;
-    for (var name in model!) {
-      var rawData = name.toJson();
-      for (var key in rawData.keys) {
-        if (key == "logindate" && shouldAddDate) {
+    for (var name in data) {
+      if (shouldAddDate) {
+        columns.add(DataColumn(
+          numeric: isNumeric("Date"),
+          label: Center(
+            child: Text(
+              fixHeaderText("Date"),
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12),
+            ),
+          ),
+        ));
+        shouldAddDate = false;
+      }
+      if (name == "RMName") {
+        String headerName = "RMName";
+        bool columnExists = columns.any((column) =>
+            column.label is Center &&
+            (column.label as Center).child is Text &&
+            ((column.label as Center).child as Text).data == headerName);
+        if (!columnExists) {
           columns.add(DataColumn(
-            numeric: isNumeric("Date"),
+            numeric: isNumeric(headerName),
             label: Center(
               child: Text(
-                fixHeaderText("Date"),
+                fixHeaderText(headerName),
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                     color: Colors.white,
@@ -42,30 +65,6 @@ class _RmAttendanceDataTableWidgetState
               ),
             ),
           ));
-          shouldAddDate = false;
-        }
-        if (key == "RMName") {
-          String headerName = rawData[key].toString();
-          bool columnExists = columns.any((column) =>
-              column.label is Center &&
-              (column.label as Center).child is Text &&
-              ((column.label as Center).child as Text).data == headerName);
-          if (!columnExists) {
-            columns.add(DataColumn(
-              numeric: isNumeric(headerName),
-              label: Center(
-                child: Text(
-                  fixHeaderText(headerName),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12),
-                ),
-              ),
-            ));
-          }
         }
       }
     }
@@ -83,7 +82,7 @@ class _RmAttendanceDataTableWidgetState
   }
 
 //Prepair table rows
-  List<DataRow> getTableRows(List<RMAttendanceModel>? data) {
+  List<DataRow> getTableRows(List<dynamic> data) {
     List<DataRow> rows = [];
     Set<String> addedDates = {};
 
@@ -203,33 +202,80 @@ class _RmAttendanceDataTableWidgetState
     return double.tryParse(s) != null;
   }
 
-  List<RMAttendanceModel> getTableData(List<BaseModel> reportData) {
-    List<RMAttendanceModel> attendanceData = [];
-    Map<String, dynamic> rawData = HashMap();
-
-    for (var item in reportData) {
-      // var rawData = item.toJson();
-      // RMAttendanceModel rmAttendanceModel =
-      //     RMAttendanceModel(logindate: "", logintime: "", rMName: "");
-      // for (var key in rawData.keys) {
-      //   if (key == "logindate") {
-      //     rmAttendanceModel.logindate = rawData[key].toString();
-      //   }
-      //   if (key == "logintime") {
-      //     rmAttendanceModel.logintime = rawData[key].toString();
-      //   }
-      //   if (key == "rMName") {
-      //     rmAttendanceModel.rMName = rawData[key].toString();
-      //   }
-      // }
-      attendanceData.add(RMAttendanceModel.fromJson(item.toJson()));
-      rawData.addEntries(item.toJson().entries);
-      //attendanceData.add(rmAttendanceModel);
+  AttenadnceReportModel getTableData(List<BaseModel> reportData) {
+    AttenadnceReportModel data = AttenadnceReportModel();
+    String jsonData = '''
+  [
+    {
+        "loginDate": "09-20-2023",
+        "logins": [
+            {
+                "RMName": "Manindar Sharma",
+                "loginTime": "07:40:55"
+            },
+            {
+                "RMName": "Vishal Singh",
+                "loginTime": "06:40:58"
+            },
+            {
+                "RMName": "Ajay Tyagi",
+                "loginTime": "05:50:12"
+            }
+        ]
+    },
+    {
+        "loginDate": "09-21-2023",
+        "logins": [
+            {
+                "RMName": "Manindar Sharma",
+                "loginTime": "07:40:55"
+            },
+            {
+                "RMName": "Vishal Singh",
+                "loginTime": "06:40:58"
+            },
+            {
+                "RMName": "Ajay Tyagi",
+                "loginTime": "05:50:12"
+            }
+        ]
+    },
+    {
+        "loginDate": "09-22-2023",
+        "logins": [
+            {
+                "RMName": "Manindar Sharma",
+                "loginTime": "07:40:55"
+            },
+            {
+                "RMName": "Vishal Singh",
+                "loginTime": "06:40:58"
+            },
+            {
+                "RMName": "Ajay Tyagi",
+                "loginTime": "05:50:12"
+            }
+        ]
     }
-    rawData.forEach((key, value) {
-      print("key: $key, value: $value");
-    });
-    return attendanceData;
+  ]
+  ''';
+
+    data = AttenadnceReportModel.fromJson(jsonDecode(jsonData));
+
+    // Access and print the values
+    // for (var item in data) {
+    //   String loginDate = item['loginDate'];
+    //   List<dynamic> logins = item['logins'];
+
+    //   print('Login Date: $loginDate');
+    //   for (var login in logins) {
+    //     String rmName = login['RMName'];
+    //     String loginTime = login['loginTime'];
+    //     print('RMName: $rmName, Login Time: $loginTime');
+    //   }
+    //   print('---');
+    // }
+    return data;
   }
 
   @override
@@ -238,7 +284,7 @@ class _RmAttendanceDataTableWidgetState
   }
 
   //Prepair data table
-  Widget prepareDataTable(List<RMAttendanceModel>? data) {
+  Widget prepareDataTable(data) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Column(

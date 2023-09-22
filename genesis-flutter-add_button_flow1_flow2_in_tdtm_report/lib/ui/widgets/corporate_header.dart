@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:management_app/constants/app_colors.dart';
-import 'package:management_app/constants/screens.dart';
 import 'package:management_app/utils/common_utils.dart';
 import 'package:management_app/utils/data_streem.dart';
 
@@ -66,7 +64,7 @@ class _CorporateHeaderState extends State<CorporateHeader> {
       context: context,
       initialDate: selectedDate, // Refer step 1
       firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
+      lastDate: DateTime.now(),
     );
     if (picked != null && picked != selectedDate) {
       setState(() {

@@ -24,6 +24,7 @@ import 'package:management_app/holders/tdtm_admin_screen_data_holder.dart';
 import 'package:management_app/holders/tdtm_screen_data_holder.dart';
 import 'package:management_app/holders/team_wise_revenue_data_holder.dart';
 import 'package:management_app/holders/verifier_screen_data_holder.dart';
+import 'package:management_app/holders/zone_wise_collection_data_holder.dart';
 import 'package:management_app/models/base_model.dart';
 import 'package:management_app/models/phlebo_manager.dart';
 import 'package:management_app/ui/screen_handler.dart';
@@ -32,6 +33,7 @@ import 'package:management_app/ui/widgets/disposition_data_table.dart';
 import 'package:management_app/ui/widgets/inbound_conversion_data_table.dart';
 import 'package:management_app/ui/widgets/projection_data_table.dart';
 import 'package:management_app/ui/widgets/rm_attendance_data_table_widget.dart';
+import 'package:management_app/ui/widgets/rm_attendance_data_table_widget_test.dart';
 import 'package:management_app/ui/widgets/tdtm_admin_data_table_widget.dart';
 import 'package:management_app/ui/widgets/tdtm_data_table_widget.dart';
 import 'package:management_app/ui/widgets/team_wise_revenue_data_table.dart';
@@ -176,6 +178,7 @@ class ReportState extends State<ReportScreen> {
             Map value = map["value"];
             reportData = ScreenHandler().getZoneWiseCollectionReportData(
               value["selectedDate"],
+              value["selectedTimeSlot"],
             );
           } else if (type == Screens.rmAttendanceReport) {
             Map value = map["value"];
@@ -325,7 +328,8 @@ class ReportState extends State<ReportScreen> {
 
       case Screens.zoneWiseCollectionReport:
         reportData = ScreenHandler().getZoneWiseCollectionReportData(
-            InboundConversionDateHolder().selectedDate);
+            ZoneWiseCollectionDataHolder().selectedDate,
+            ZoneWiseCollectionDataHolder().selectedTimeSlot);
         break;
 
       case Screens.rmAttendanceReport:
@@ -422,7 +426,7 @@ class ReportState extends State<ReportScreen> {
                     reportData: snapshot.data!,
                   );
                 } else if (widget.reportToOpen == Screens.rmAttendanceReport) {
-                  return RmAttendanceDataTableWidget(
+                  return RmAttendanceDataTableWidgetTest(
                     reportData: snapshot.data!,
                   );
                 } else {

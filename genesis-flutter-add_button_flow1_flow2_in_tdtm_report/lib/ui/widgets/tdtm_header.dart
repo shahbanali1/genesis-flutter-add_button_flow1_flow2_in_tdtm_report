@@ -43,7 +43,7 @@ class _TDTMHeaderState extends State<TDTMHeader> {
             children: [
               IconButton(
                 icon: const Icon(Icons.date_range_outlined,
-                    size: 30, color: Colors.blue),
+                    size: 30, color: AppColors.primaryColor),
                 onPressed: () {
                   showFromDateDialog(context);
                 },
@@ -54,7 +54,7 @@ class _TDTMHeaderState extends State<TDTMHeader> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.blue),
+                        border: Border.all(color: AppColors.primaryColor),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(5.0))),
                     child: Padding(
@@ -68,7 +68,7 @@ class _TDTMHeaderState extends State<TDTMHeader> {
                 padding: const EdgeInsets.only(left: 8.0),
                 child: IconButton(
                   icon: const Icon(Icons.date_range_outlined,
-                      size: 30, color: Colors.blue),
+                      size: 30, color: AppColors.primaryColor),
                   onPressed: () {
                     showToDateDialog(context);
                   },
@@ -80,7 +80,7 @@ class _TDTMHeaderState extends State<TDTMHeader> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.blue),
+                        border: Border.all(color: AppColors.primaryColor),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(5.0))),
                     child: Padding(
@@ -93,6 +93,8 @@ class _TDTMHeaderState extends State<TDTMHeader> {
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryColor),
                     onPressed: () {
                       dateValidation(selectedFromDate, selectedToDate);
                     },
@@ -204,7 +206,7 @@ class _TDTMHeaderState extends State<TDTMHeader> {
       context: context,
       initialDate: selectedFromDate, // Refer step 1
       firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
+      lastDate: DateTime.now(),
     );
     if (picked != null && picked != selectedFromDate) {
       setState(() {
@@ -218,7 +220,7 @@ class _TDTMHeaderState extends State<TDTMHeader> {
       context: context,
       initialDate: selectedToDate, // Refer step 1
       firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
+      lastDate: DateTime.now(),
     );
     if (picked != null && picked != selectedToDate) {
       setState(() {

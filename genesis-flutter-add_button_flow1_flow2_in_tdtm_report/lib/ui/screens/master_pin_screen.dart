@@ -82,6 +82,8 @@ class _MasterPinScreenState extends State<MasterPinScreen> {
                     height: 50,
                     width: 160,
                     child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primaryColor),
                         onPressed: () {
                           if (newPinController.text.length < 6) {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(

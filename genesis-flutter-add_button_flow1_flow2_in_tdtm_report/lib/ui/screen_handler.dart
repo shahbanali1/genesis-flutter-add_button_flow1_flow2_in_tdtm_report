@@ -287,9 +287,10 @@ class ScreenHandler {
     return ZoneWiseCollectionDataHolder().getZoneWiseCollectionHeader();
   }
 
-  Future<List<BaseModel>> getZoneWiseCollectionReportData(String selectedDate) {
-    return managementApis.getZoneWiseBookingCollection(selectedDate,
-        ZoneWiseCollectionDataHolder().time, commonUtils.checkPlatformType());
+  Future<List<BaseModel>> getZoneWiseCollectionReportData(
+      String selectedDate, String selectedTime) {
+    return managementApis.getZoneWiseBookingCollection(
+        selectedDate, selectedTime, commonUtils.checkPlatformType());
   }
 
   Widget getRMAttendanceHeader() {

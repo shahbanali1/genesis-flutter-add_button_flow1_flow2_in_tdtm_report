@@ -70,7 +70,7 @@ class _LeadWiseConversionHeaderState extends State<LeadWiseConversionHeader> {
       context: context,
       initialDate: selectedDate, // Refer step 1
       firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
+      lastDate: DateTime.now(),
     );
     if (picked != null && picked != selectedDate) {
       setState(() {

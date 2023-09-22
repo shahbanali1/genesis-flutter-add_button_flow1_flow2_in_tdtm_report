@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:management_app/constants/app_colors.dart';
 import 'package:management_app/constants/screens.dart';
+import 'package:management_app/utils/common_utils.dart';
 import 'package:management_app/utils/data_streem.dart';
 
 class DEPTCollectionHeader extends StatefulWidget {
@@ -69,20 +70,25 @@ class _DEPTCollectionHeaderState extends State<DEPTCollectionHeader> {
           padding: const EdgeInsets.only(left: 8.0),
           child: ElevatedButton(
               style: ElevatedButton.styleFrom(primary: AppColors.primaryColor),
-              // ignore: avoid_returning_null_for_void
-              onPressed: () => DataStreem().controller.add({
-                    "type": Screens.deptCollectionReport,
-                    "value": {
-                      "selectedFromDate":
-                          "${selectedFromDate.toLocal()}".split(' ')[0],
-                      "selectedToDate":
-                          "${selectedToDate.toLocal()}".split(' ')[0]
-                    }
-                  }),
+              onPressed: () => dateValidation(selectedFromDate, selectedToDate),
               child: const Text("GO")),
         ),
       ],
     );
+  }
+
+  dateValidation(DateTime fromDate, DateTime toDate) {
+    if (fromDate.month == toDate.month && fromDate.year == toDate.year) {
+      DataStreem().controller.add({
+        "type": Screens.deptCollectionReport,
+        "value": {
+          "selectedFromDate": "${selectedFromDate.toLocal()}".split(' ')[0],
+          "selectedToDate": "${selectedToDate.toLocal()}".split(' ')[0]
+        }
+      });
+    } else {
+      CommonUtils().showSnackBar(context, "Please select same month and year");
+    }
   }
 
   showDateDialog(BuildContext context) async {
@@ -90,7 +96,7 @@ class _DEPTCollectionHeaderState extends State<DEPTCollectionHeader> {
       context: context,
       initialDate: selectedFromDate, // Refer step 1
       firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
+      lastDate: DateTime.now(),
     );
     if (picked != null && picked != selectedFromDate) {
       setState(() {
@@ -104,7 +110,7 @@ class _DEPTCollectionHeaderState extends State<DEPTCollectionHeader> {
       context: context,
       initialDate: selectedToDate, // Refer step 1
       firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
+      lastDate: DateTime.now(),
     );
     if (picked != null && picked != selectedToDate) {
       setState(() {

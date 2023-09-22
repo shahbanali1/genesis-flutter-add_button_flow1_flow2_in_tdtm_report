@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:management_app/constants/app_colors.dart';
 import 'package:management_app/constants/screens.dart';
 import 'package:management_app/utils/common_utils.dart';
 import 'package:management_app/utils/data_streem.dart';
@@ -28,7 +29,7 @@ class _DispositionHeaderState extends State<DispositionHeader> {
         children: [
           IconButton(
             icon: const Icon(Icons.date_range_outlined,
-                size: 30, color: Colors.blue),
+                size: 30, color: AppColors.primaryColor),
             onPressed: () {
               showFromDateDialog(context);
             },
@@ -39,7 +40,7 @@ class _DispositionHeaderState extends State<DispositionHeader> {
               },
               child: Container(
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.blue),
+                    border: Border.all(color: AppColors.primaryColor),
                     borderRadius: const BorderRadius.all(Radius.circular(5.0))),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -52,7 +53,7 @@ class _DispositionHeaderState extends State<DispositionHeader> {
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
               icon: const Icon(Icons.date_range_outlined,
-                  size: 30, color: Colors.blue),
+                  size: 30, color: AppColors.primaryColor),
               onPressed: () {
                 showToDateDialog(context);
               },
@@ -64,7 +65,7 @@ class _DispositionHeaderState extends State<DispositionHeader> {
               },
               child: Container(
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.blue),
+                    border: Border.all(color: AppColors.primaryColor),
                     borderRadius: const BorderRadius.all(Radius.circular(5.0))),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -76,6 +77,8 @@ class _DispositionHeaderState extends State<DispositionHeader> {
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primaryColor),
                 onPressed: () {
                   dateValidation(selectedFromDate, selectedToDate);
                 },
@@ -106,7 +109,7 @@ class _DispositionHeaderState extends State<DispositionHeader> {
       context: context,
       initialDate: selectedFromDate, // Refer step 1
       firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
+      lastDate: DateTime.now(),
     );
     if (picked != null && picked != selectedFromDate) {
       setState(() {
@@ -120,7 +123,7 @@ class _DispositionHeaderState extends State<DispositionHeader> {
       context: context,
       initialDate: selectedToDate, // Refer step 1
       firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
+      lastDate: DateTime.now(),
     );
     if (picked != null && picked != selectedToDate) {
       setState(() {

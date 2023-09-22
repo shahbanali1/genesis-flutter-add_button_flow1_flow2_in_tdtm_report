@@ -719,7 +719,7 @@ class ManagementApis {
               "Accept": "text/xml"
             },
             body: soapEnvelope)
-        .timeout(const Duration(seconds: 80));
+        .timeout(const Duration(seconds: 120));
 
     print(response.body);
 
