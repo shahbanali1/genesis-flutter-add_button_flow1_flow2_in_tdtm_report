@@ -3,9 +3,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:management_app/constants/app_colors.dart';
+import 'package:management_app/models/attendance_login_data_model.dart';
 import 'package:management_app/models/attendance_report_model.dart';
 import 'package:management_app/models/base_model.dart';
-import 'package:management_app/models/rm_attendance_model.dart';
 
 class RmAttendanceDataTableWidgetTest extends StatefulWidget {
   final List<BaseModel> reportData;
@@ -21,12 +21,13 @@ class RmAttendanceDataTableWidgetTest extends StatefulWidget {
 
 class _RmAttendanceDataTableWidgetTestState
     extends State<RmAttendanceDataTableWidgetTest> {
-  List<DataColumn> getTableHeaders(List<dynamic> data) {
+  int numOfColumns = 0;
+  List<DataColumn> getTableHeaders(List<AttenadnceReportModel> attendanceList) {
     List<DataColumn> columns = [];
 
-    // var rawData = model.toJson();
     bool shouldAddDate = true;
-    for (var name in data) {
+
+    for (var data in attendanceList) {
       if (shouldAddDate) {
         columns.add(DataColumn(
           numeric: isNumeric("Date"),
@@ -44,32 +45,58 @@ class _RmAttendanceDataTableWidgetTestState
         ));
         shouldAddDate = false;
       }
-      if (name == "RMName") {
-        String headerName = "RMName";
-        bool columnExists = columns.any((column) =>
-            column.label is Center &&
-            (column.label as Center).child is Text &&
-            ((column.label as Center).child as Text).data == headerName);
-        if (!columnExists) {
-          columns.add(DataColumn(
-            numeric: isNumeric(headerName),
-            label: Center(
-              child: Text(
-                fixHeaderText(headerName),
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12),
+
+      if (data.logins != null) {
+        for (var login in data.logins!) {
+          String headerName = login.rMName.toString();
+          bool columnExists = columns.any((column) =>
+              column.label is Center &&
+              (column.label as Center).child is Text &&
+              ((column.label as Center).child as Text).data == headerName);
+          if (!columnExists) {
+            columns.add(DataColumn(
+              numeric: isNumeric(headerName),
+              label: Center(
+                child: Text(
+                  fixHeaderText(headerName),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12),
+                ),
               ),
-            ),
-          ));
+            ));
+          }
         }
       }
     }
 
+    numOfColumns = columns.length;
+
     return columns;
+  }
+
+  int getNumColumns(List<AttenadnceReportModel> attendanceList) {
+    int numColumns = 1; // Start with 1 for the "Date" column
+
+    for (var data in attendanceList) {
+      if (data.logins != null) {
+        for (var login in data.logins!) {
+          String headerName = login.rMName.toString();
+          bool columnExists = attendanceList.any((data) =>
+              data.logins != null &&
+              data.logins!
+                  .any((login) => login.rMName.toString() == headerName));
+          if (!columnExists) {
+            numColumns++;
+          }
+        }
+      }
+    }
+
+    return numColumns;
   }
 
   String fixHeaderText(String s) {
@@ -82,28 +109,41 @@ class _RmAttendanceDataTableWidgetTestState
   }
 
 //Prepair table rows
-  List<DataRow> getTableRows(List<dynamic> data) {
+  List<DataRow> getTableRows(List<AttenadnceReportModel> attendanceList) {
     List<DataRow> rows = [];
     Set<String> addedDates = {};
+    //int numColumns = getNumColumns(attendanceList);
 
     var i = 0;
 
-    for (var d in data!) {
-      var rawData = d.toJson();
-      for (var key in rawData.keys) {
-        // if (key == "logindate") {
-        //   String date = d.logindate.toString();
-        //   if (!addedDates.contains(date)) {
-        //     rows.add(
-        //         DataRow(cells: getCells(d), color: getRowColor(rows.length)));
-        //     addedDates.add(date);
-        //   }
-        // }
-        // if (key == "logintime") {
-        //   rows.add(DataRow(cells: getCells(d), color: getRowColor(i)));
-        // }
-        i++;
-      }
+    for (var attendanceData in attendanceList) {
+      rows.add(DataRow(
+          cells: getCells(attendanceData, numOfColumns),
+          color: getRowColor(i)));
+      i++;
+
+      // if (attendanceData.logins != null) {
+      //   for (var login in attendanceData.logins!) {
+
+      //     if (login.loginTime != null) {
+      //       rows.add(DataRow(cells: getCells(login), color: getRowColor(i)));
+      //     }
+      //   }
+      // }
+      // for (var key in rawData.keys) {
+      //   if (key == "logindate") {
+      //     String date = d.logindate.toString();
+      //     if (!addedDates.contains(date)) {
+      //       rows.add(
+      //           DataRow(cells: getCells(d), color: getRowColor(rows.length)));
+      //       addedDates.add(date);
+      //     }
+      //   }
+      //   if (key == "logintime") {
+      //     rows.add(DataRow(cells: getCells(d), color: getRowColor(i)));
+      //   }
+      //   i++;
+      // }
       //rows.add(DataRow(cells: getCells(d), color: getRowColor(i)));
     }
 
@@ -123,50 +163,47 @@ class _RmAttendanceDataTableWidgetTestState
   }
 
 //Prepair row cells
-  List<DataCell> getCells(RMAttendanceModel model) {
-    return List<DataCell>.from(
-        model.toJson().values.map((e) => DataCell(Container(
-              width: double.infinity,
-              child: Text(
-                cellText(e.toString()),
-                textAlign: getTextAlignment(e.toString()),
-                style: const TextStyle(
-                  fontSize: 10,
-                ),
-              ),
-            ))));
-    // List<DataCell> cellList = [];
-    // cellList.add(DataCell(Container(
-    //   width: double.infinity,
-    //   child: Text(
-    //     splitStringFromSpace(model.logindate.toString()),
-    //     textAlign: getTextAlignment(model.logindate.toString()),
-    //     style: const TextStyle(
-    //       fontSize: 10,
-    //     ),
-    //   ),
-    // )));
-    // cellList.add(DataCell(Container(
-    //   width: double.infinity,
-    //   child: Text(
-    //     splitStringFromComma(model.logintime.toString()),
-    //     textAlign: getTextAlignment(model.logintime.toString()),
-    //     style: const TextStyle(
-    //       fontSize: 10,
-    //     ),
-    //   ),
-    // )));
-    // cellList.add(DataCell(Container(
-    //   width: double.infinity,
-    //   child: Text(
-    //     model.rMName.toString(),
-    //     textAlign: getTextAlignment(model.rMName.toString()),
-    //     style: const TextStyle(
-    //       fontSize: 10,
-    //     ),
-    //   ),
-    // )));
-    // return cellList;
+  List<DataCell> getCells(AttenadnceReportModel model, int numColumns) {
+    List<DataCell> cellList = [];
+
+    cellList.add(DataCell(Container(
+      width: double.infinity,
+      child: Text(
+        splitStringFromSpace(model.loginDate.toString()),
+        textAlign: getTextAlignment(model.loginDate.toString()),
+        style: const TextStyle(
+          fontSize: 10,
+        ),
+      ),
+    )));
+    if (model.logins != null) {
+      for (var login in model.logins!) {
+        cellList.add(DataCell(Container(
+          width: double.infinity,
+          child: Text(
+            splitStringFromComma(login.loginTime.toString()),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 10,
+            ),
+          ),
+        )));
+      }
+    }
+    // Add empty cells if the number of cells is less than the number of columns
+    while (cellList.length < numColumns) {
+      cellList.add(DataCell(Container(
+        width: double.infinity,
+        child: Text(
+          "-",
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 10,
+          ),
+        ),
+      )));
+    }
+    return cellList;
   }
 
   String cellText(String s) {
@@ -202,8 +239,7 @@ class _RmAttendanceDataTableWidgetTestState
     return double.tryParse(s) != null;
   }
 
-  AttenadnceReportModel getTableData(List<BaseModel> reportData) {
-    AttenadnceReportModel data = AttenadnceReportModel();
+  List<AttenadnceReportModel> getTableData(List<BaseModel> reportData) {
     String jsonData = '''
   [
     {
@@ -228,15 +264,15 @@ class _RmAttendanceDataTableWidgetTestState
         "logins": [
             {
                 "RMName": "Manindar Sharma",
-                "loginTime": "07:40:55"
+                "loginTime": "07:45:55"
             },
             {
                 "RMName": "Vishal Singh",
-                "loginTime": "06:40:58"
+                "loginTime": "06:45:58"
             },
             {
                 "RMName": "Ajay Tyagi",
-                "loginTime": "05:50:12"
+                "loginTime": "05:53:12"
             }
         ]
     },
@@ -245,37 +281,118 @@ class _RmAttendanceDataTableWidgetTestState
         "logins": [
             {
                 "RMName": "Manindar Sharma",
-                "loginTime": "07:40:55"
+                "loginTime": "07:50:55"
             },
             {
                 "RMName": "Vishal Singh",
-                "loginTime": "06:40:58"
+                "loginTime": "06:50:58"
             },
             {
                 "RMName": "Ajay Tyagi",
-                "loginTime": "05:50:12"
+                "loginTime": "05:56:12"
+            },
+            {
+                "RMName": "Manish Sharma",
+                "loginTime": "09:15:25"
             }
         ]
     }
   ]
   ''';
 
-    data = AttenadnceReportModel.fromJson(jsonDecode(jsonData));
-
-    // Access and print the values
-    // for (var item in data) {
-    //   String loginDate = item['loginDate'];
-    //   List<dynamic> logins = item['logins'];
-
-    //   print('Login Date: $loginDate');
-    //   for (var login in logins) {
-    //     String rmName = login['RMName'];
-    //     String loginTime = login['loginTime'];
-    //     print('RMName: $rmName, Login Time: $loginTime');
-    //   }
-    //   print('---');
+    // List<dynamic> parsedData = jsonDecode(jsonData);
+    // List<AttenadnceReportModel> attendanceList = [];
+    // for (var item in parsedData) {
+    //   attendanceList.add(AttenadnceReportModel.fromJson(item));
     // }
-    return data;
+    List<AttenadnceReportModel> attendanceList = [];
+    // List<Logins> loginsDetailList = [];
+    // Logins login = Logins(loginTime: "", rMName: "");
+    // AttenadnceReportModel attenadnceReportModel =
+    //     AttenadnceReportModel(loginDate: "", logins: loginsDetailList);
+
+    // clearData() {
+    //   //attendanceList = [];
+    //   loginsDetailList = [];
+    //   login = Logins(loginTime: "", rMName: "");
+    //   attenadnceReportModel =
+    //       AttenadnceReportModel(loginDate: "", logins: loginsDetailList);
+    // }
+
+    // for (BaseModel item in reportData) {
+    //   Map<String, dynamic> json = item.toJson();
+    //   String loginDate = json['logindate'];
+    //   String rMName = json['RMName'];
+    //   String loginTime = json['logintime'];
+    //   print('logindate: $loginDate, RMName: $rMName, logintime: $loginTime');
+
+    //   // attenadnceReportModel = attendanceList.firstWhere(
+    //   //     (element) => element.loginDate == loginDate,
+    //   //     orElse: () => AttenadnceReportModel(
+    //   //         loginDate: loginDate, logins: loginsDetailList));
+
+    //   // if (attenadnceReportModel.loginDate != loginDate) {
+    //   //   attenadnceReportModel = AttenadnceReportModel(
+    //   //       loginDate: loginDate, logins: loginsDetailList);
+    //   //   loginsDetailList = [];
+    //   // }
+
+    //   attenadnceReportModel.loginDate = loginDate;
+    //   for (BaseModel baseItem in reportData) {
+    //     Map<String, dynamic> jsonMap = item.toJson();
+    //     if (login.rMName == rMName) {
+    //       login.loginTime = loginTime;
+    //     }
+    //   }
+    //   login.rMName = rMName;
+    //   login.loginTime = loginTime;
+
+    //   loginsDetailList.add(login);
+    //   // if (!attendanceList.any((element) => element.loginDate == loginDate)) {
+    //   //   attendanceList.add(attenadnceReportModel);
+    //   // }
+    //   attendanceList.add(attenadnceReportModel);
+
+    //   clearData();
+    // }
+
+    // Create a map to store the grouped data
+    Map<String, dynamic> groupedData = {};
+
+    // Iterate through the original data
+    for (BaseModel item in reportData) {
+      Map<String, dynamic> json = item.toJson();
+      String loginDate = json['logindate'].split(' ')[0]; // Extract date
+      String rmName = json['RMName'];
+      String loginTime = json['logintime'].split('.')[0]; // Remove milliseconds
+
+      // Create a new login entry
+      var loginEntry = {
+        'RMName': rmName,
+        'loginTime': loginTime,
+      };
+
+      // Check if the date already exists in the grouped data
+      if (groupedData.containsKey(loginDate)) {
+        // Add the login entry to the existing date
+        groupedData[loginDate]['logins'].add(loginEntry);
+      } else {
+        // Create a new date entry with the login
+        groupedData[loginDate] = {
+          'loginDate': loginDate,
+          'logins': [loginEntry],
+        };
+      }
+    }
+
+    // Convert the grouped data to a list of maps
+    List finalData = groupedData.values.toList();
+
+    // Print the final data
+    print(jsonEncode(finalData));
+
+    return attendanceList =
+        finalData.map((item) => AttenadnceReportModel.fromJson(item)).toList();
   }
 
   @override
@@ -284,7 +401,7 @@ class _RmAttendanceDataTableWidgetTestState
   }
 
   //Prepair data table
-  Widget prepareDataTable(data) {
+  Widget prepareDataTable(List<AttenadnceReportModel> data) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Column(

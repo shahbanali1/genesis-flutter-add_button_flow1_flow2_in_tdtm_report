@@ -32,7 +32,6 @@ import 'package:management_app/ui/widgets/data_table_widget.dart';
 import 'package:management_app/ui/widgets/disposition_data_table.dart';
 import 'package:management_app/ui/widgets/inbound_conversion_data_table.dart';
 import 'package:management_app/ui/widgets/projection_data_table.dart';
-import 'package:management_app/ui/widgets/rm_attendance_data_table_widget.dart';
 import 'package:management_app/ui/widgets/rm_attendance_data_table_widget_test.dart';
 import 'package:management_app/ui/widgets/tdtm_admin_data_table_widget.dart';
 import 'package:management_app/ui/widgets/tdtm_data_table_widget.dart';
